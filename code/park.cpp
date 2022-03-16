@@ -39,7 +39,7 @@ int main () {
 	} 
 	
 	//시간 입력 
-	todayDate= (t->tm_year + 1900)*10000 + (t->tm_mon + 1)*100 + t->tm_mday;  //
+	todayDate= (t->tm_year + 1900)*10000 + (t->tm_mon + 1)*100 + t->tm_mday;  //20220316 형태로 변형 
 
 	//만 나이 계산 
 	manAge = (todayDate - id)/10000;
