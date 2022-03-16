@@ -3,7 +3,7 @@
 int main () {
 	//변수 선언
 	int ticketCase, enterTime, id, wooDae, myYear, myMonthDay, manAge, realAge, ticketPrice;
-	int ageCase, ticketTimeCase1;
+	int ageCase, ticketTimeCase;
 	const int dayAdult = 56000, dayTeen = 50000, dayKid = 46000, dayBaby = 15000, a4Adult = 45000, a4Teen = 40000, a4Kid = 35000, a4Baby = 15000,
 	    	  dayAdultAll = 59000, dayTeenAll = 52000, dayKidAll = 47000, dayBabyAll = 15000, a4AdultAll = 48000, a4TeenAll = 42000, a4KidAll = 36000, a4BabyAll = 15000;
 
@@ -21,6 +21,11 @@ int main () {
 	printf("\n주민등록번호를 입력해주세요. (6자리)\n");
 	scanf("%d",&id);
 	
+	//상시 우대사항 선택
+	printf("\n우대사항은 선택해주세요.\n1.없음(*만 65세 이상은 어린이요금 적용)\n2.장애인 우대\n3.국가유공자 우대\n4.휴가장병 우대\n5.임산부 우대\n6.다둥이 행복카드 우대\n");
+	scanf("%d",&wooDae);
+	
+	//만 나이 계산 
 	myYear = id/10000;       // ex) 950306 > 95 
 	myMonthDay = id%10000;  // ex) 950306 > 306 
 	
@@ -42,7 +47,7 @@ int main () {
 	//만 13세 이상 ~ 만 18세 : 청소년 요금      (2)
 	//만 65세 이상 : 어린이요금                 (1)
 	if ( manAge <2) {
-		ticketPrice = 0;
+		ticketPrice = 0; // 베이비 (단체고객이 아니라면 무료) 
 		ageCase=4;
 	} else if ((manAge >= 2 && manAge <13) || manAge >= 65 ) {
 		ageCase = 3; // 어린이 
@@ -51,14 +56,20 @@ int main () {
 	} else {
 		ageCase = 1;  //어른 
 	}
+		
+	//이용권 종류 , 주야간권 종류에 따른 케이스 분류 
+	if (ticketCase==1 && enterTime==1) {
+		ticketTimeCase = 1; //종합 + 1Day 
+	} else if (ticketCase==1 && enterTime==2) {
+		ticketTimeCase =2; //종합 + 4시후 
+	} else if (ticketCase == 2 && enterTime == 1) {
+		ticketTimeCase = 3; //파크 + 1Day 
+	} else {
+		ticketTimeCase = 4; // 파크 + 4시후 
+	} 
 	
-	//주민번호로 만 나이 판단하여 요금제 선정
+	//우대사항 전, 요금 선정
 
-
-	//상시 우대사항 선택
-	printf("\n우대사항은 선택해주세요.\n1.없음(*만 65세 이상은 어린이요금 적용)\n2.장애인 우대\n3.국가유공자 우대\n4.휴가장병 우대\n5.임산부 우대\n6.다둥이 행복카드 우대\n");
-	scanf("%d",&wooDae);
-	
 	//임장료에 우대사항 적용 
 	
 	//입장료 총액 출력
