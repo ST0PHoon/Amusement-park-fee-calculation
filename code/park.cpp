@@ -4,7 +4,7 @@
 
 int main () {
 	//변수 선언
-	int ticketCase, enterTime, id, wooDae, myYear, myMonthDay, manAge, realAge, ticketPrice, ageCase, ticketTimeCase, again, todayYear, todayMonth, todayDate;
+	int ticketCase, enterTime, id, wooDae, myYear, myMonthDay, manAge, realAge, ticketPrice, ageCase, ticketTimeCase, again, todayDate;
 	const int dayAdult = 56000, dayTeen = 50000, dayKid = 46000, dayBaby = 15000, a4Adult = 45000, a4Teen = 40000, a4Kid = 35000, a4Baby = 15000,
 	    	  dayAdultAll = 59000, dayTeenAll = 52000, dayKidAll = 47000, dayBabyAll = 15000, a4AdultAll = 48000, a4TeenAll = 42000, a4KidAll = 36000, a4BabyAll = 15000;
 	//시간 불러오기 
@@ -25,7 +25,7 @@ int main () {
 	scanf("%d",&enterTime);
 	
 	//주민번호 입력 받기 , 변수 계산 
-	printf("\n주민등록번호를 입력해주세요. (6자리)\n");
+	printf("\n주민등록번호를 입력해주세요. (8자리. ex) 20011225)\n");
 	scanf("%d",&id);
 	
 	//상시 우대사항 선택
@@ -33,26 +33,10 @@ int main () {
 	scanf("%d",&wooDae);
 	
 	//시간 입력 
-	todayYear = t->tm_year + 1900;
-	todayMonth = t->tm_mon + 1;
-	todayDate = t->tm_mday;
+	todayDate= (t->tm_year + 1900)*10000 + (t->tm_mon + 1)*100 + t->tm_mday;
 	
 	//만 나이 계산 
-	myYear = id/10000;       // ex) 950306 > 95 
-	myMonthDay = id%10000;  // ex) 950306 > 306 
-	
-	realAge = todayYear%100 - myYear+1;
-	
-	if (realAge <= 0) {
-		//1900년대 출생자인 경우 
-		realAge += 100;
-	} 
-	
-	if ( myMonthDay <= (todayMonth*100+todayDate)) {
-		manAge= realAge -1;
-	} else {
-		manAge= realAge-2;
-	}
+	manAge = (todayDate - id)/10000;
 	
 	//나이 케이스 정립 / 2022.03.16 기준
 	// 0 ~ 12개월 미만 (만 0세) 는 무료 
@@ -145,10 +129,10 @@ int main () {
 	
 	//입장료 총액 출력.
 	if (ticketPrice==0){
-		printf("\n무료 입장 입니다.");
+		printf("\n무료 입장 입니다.\n");
 	}
 	else {
-		printf ("\n가격은 %d원 입니다.",ticketPrice) ;
+		printf ("\n가격은 %d원 입니다.\n",ticketPrice) ;
 	}
 	
 	//이어서 예매할지 선택 
