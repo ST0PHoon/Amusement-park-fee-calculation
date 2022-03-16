@@ -3,7 +3,7 @@
 int main () {
 	//변수 선언
 	int ticketCase, enterTime, id, wooDae, myYear, myMonthDay, manAge, realAge, ticketPrice;
-	int ageCase, ticketTimeCase;
+	int ageCase, ticketTimeCase, again;
 	const int dayAdult = 56000, dayTeen = 50000, dayKid = 46000, dayBaby = 15000, a4Adult = 45000, a4Teen = 40000, a4Kid = 35000, a4Baby = 15000,
 	    	  dayAdultAll = 59000, dayTeenAll = 52000, dayKidAll = 47000, dayBabyAll = 15000, a4AdultAll = 48000, a4TeenAll = 42000, a4KidAll = 36000, a4BabyAll = 15000;
 
@@ -116,12 +116,26 @@ int main () {
 		ticketPrice = 0;
 	}
 	//임장료에 우대사항 적용
-	
+	if (wooDae == 2) {
+		ticketPrice = ticketPrice/2 ; // 모든 티켓 50퍼 우대 
+	} else if (wooDae == 3) {
+		ticketPrice = ticketPrice/2 ;
+	} else if (wooDae == 4 && ticketCase==1) { //종합이용권만 우대 
+		ticketPrice = ticketPrice * 0.51;
+	} else if (wooDae == 5 && ticketCase==1 ) {
+		ticketPrice = ticketPrice/2;
+	} else if (wooDae == 6 && ticketCase==1) {
+		ticketPrice = ticketPrice*0.7;
+	} else {
+		printf("\n우대 사항이 없습니다.\n");
+	}
 	
 	//입장료 총액 출력
-	printf ("가격은 %d원 입니다.",ticketPrice) ;
-	//이어서 예매할지 선택 
+	printf ("\n가격은 %d원 입니다.",ticketPrice) ;
 	
+	//이어서 예매할지 선택 
+	printf("\n이어서 이용권을 구매하시겠습니까?\n 1.예\n2.아니요");
+	scanf("%d",&again); 
 	
 	return 0; 
 }
