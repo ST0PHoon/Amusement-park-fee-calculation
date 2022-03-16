@@ -112,10 +112,11 @@ int main () {
 			ticketPrice=a4Baby;
 		}
 	}
-	// 만 1세 미만일때 무료입장 
+	//12개월 미만의 경우
 	if ( manAge == 0) {
 		ticketPrice = 0;
-	}
+	} 
+
 	//임장료에 우대사항 적용
 	if (wooDae == 2) {
 		ticketPrice = ticketPrice/2 ; // 모든 티켓 50퍼 우대 
@@ -132,7 +133,12 @@ int main () {
 	}
 	
 	//입장료 총액 출력
-	printf ("\n가격은 %d원 입니다.",ticketPrice) ;
+	if (ticketPrice==0){
+		printf("\n무료 입장 입니다.");
+	}
+	else {
+		printf ("\n가격은 %d원 입니다.",ticketPrice) ;
+	}
 	
 	//이어서 예매할지 선택 
 	printf("\n이어서 이용권을 구매하시겠습니까?\n1.예\n2.아니요\n");
