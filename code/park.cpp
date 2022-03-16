@@ -32,9 +32,15 @@ int main () {
 	printf("\n우대사항은 선택해주세요.\n1.없음(*만 65세 이상은 어린이요금 적용)\n2.장애인 우대\n3.국가유공자 우대\n4.휴가장병 우대\n5.임산부 우대\n6.다둥이 행복카드 우대\n");
 	scanf("%d",&wooDae);
 	
+	//입력 오류 
+	if (id/10000000 < 1 || ticketCase> 2 || enterTime >2 || wooDae>6){
+		printf("입력이 잘못되었습니다.");
+		break;
+	} 
+	
 	//시간 입력 
 	todayDate= (t->tm_year + 1900)*10000 + (t->tm_mon + 1)*100 + t->tm_mday;  //
-	
+
 	//만 나이 계산 
 	manAge = (todayDate - id)/10000;
 	
