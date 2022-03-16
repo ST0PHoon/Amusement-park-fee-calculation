@@ -42,19 +42,20 @@ int main () {
 		manAge= realAge-2;
 	}
 	
-	//나이 케이스 정립 / 2022.03.16 기준 
-	//36개월(만 2세)이상 ~ 만 12세 : 어린이요금 (3)
+	//나이 케이스 정립 / 2022.03.16 기준
+	// 0 ~ 12개월 미만 (만 0세) 는 무료 
+	// 베이비 (단체고객이 아니라면 무료)        (4)
+	//36개월(만 3세)이상 ~ 만 12세 : 어린이요금 (3)
 	//만 13세 이상 ~ 만 18세 : 청소년 요금      (2)
 	//만 65세 이상 : 어린이요금                 (1)
-	if ( manAge <2) {
-		ticketPrice = 0; // 베이비 (단체고객이 아니라면 무료) 
-		ageCase=4;
-	} else if ((manAge >= 2 && manAge <13) || manAge >= 65 ) {
+	if ( manAge <3 && manAge >=1) { 
+		ageCase=4; // 베이비 
+	} else if ((manAge >= 3 && manAge <13) || manAge >= 65 ) {
 		ageCase = 3; // 어린이 
 	} else if (manAge >= 13 && manAge <= 18) {
 		ageCase = 2; //청소년 
 	} else {
-		ageCase = 1;  //어른 
+		ageCase = 1; // 어른 
 	}
 		
 	//이용권 종류 , 주야간권 종류에 따른 케이스 분류 
@@ -68,12 +69,57 @@ int main () {
 		ticketTimeCase = 4; // 파크 + 4시후 
 	} 
 	
-	//우대사항 전, 요금 선정
-
-	//임장료에 우대사항 적용 
+	//우대사항 이전, 요금 선정
+	if ( ageCase == 1) { // 어른이고  
+		if (ticketTimeCase== 1) {        // 종합 + 1Day 
+			ticketPrice= dayAdultAll;
+		} else if (ticketTimeCase==2) {  //종합 + 4시후
+			ticketPrice= a4AdultAll;
+		}else if (ticketTimeCase ==3) {  //파크 + 1Day 
+			ticketPrice= dayAdult;
+		} else {                        // 파크 + 4시후 
+			ticketPrice= a4Adult;
+		}
+	} else if ( ageCase == 2) {  // 청소년  
+		if (ticketTimeCase== 1) {
+			ticketPrice=dayTeenAll;
+		} else if (ticketTimeCase==2) {
+			ticketPrice=a4TeenAll;
+		}else if (ticketTimeCase ==3) {
+			ticketPrice=dayTeen;
+		} else {
+			ticketPrice=a4Teen;
+		}
+	} else if ( ageCase == 3) { //어린이 + 노인 
+		if (ticketTimeCase== 1) {
+			ticketPrice=dayKidAll;
+		} else if (ticketTimeCase==2) {
+			ticketPrice=a4KidAll;
+		}else if (ticketTimeCase ==3) {
+			ticketPrice=dayKid;
+		} else {
+			ticketPrice=a4Kid;
+		}
+	} else {                  // 애기 
+		if (ticketTimeCase== 1) {
+			ticketPrice=dayBabyAll;
+		} else if (ticketTimeCase==2) {
+			ticketPrice=a4BabyAll;
+		}else if (ticketTimeCase ==3) {
+			ticketPrice=dayBaby;
+		} else {
+			ticketPrice=a4Baby;
+		}
+	}
+	// 만 1세 미만일때 무료입장 
+	if ( manAge == 0) {
+		ticketPrice = 0;
+	}
+	//임장료에 우대사항 적용
+	
 	
 	//입장료 총액 출력
-	
+	printf ("가격은 %d원 입니다.",ticketPrice) ;
 	//이어서 예매할지 선택 
 	
 	
