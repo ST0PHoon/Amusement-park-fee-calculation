@@ -25,7 +25,7 @@ int main () {
 	scanf("%d",&enterTime);
 	
 	//주민번호 입력 받기 , 변수 계산 
-	printf("\n주민등록번호를 입력해주세요. (8자리. ex) 20011225)\n");
+	printf("\n생년월일을 입력해주세요. (8자리. ex) 20011225)\n");
 	scanf("%d",&id);
 	
 	//상시 우대사항 선택
@@ -33,7 +33,7 @@ int main () {
 	scanf("%d",&wooDae);
 	
 	//시간 입력 
-	todayDate= (t->tm_year + 1900)*10000 + (t->tm_mon + 1)*100 + t->tm_mday;
+	todayDate= (t->tm_year + 1900)*10000 + (t->tm_mon + 1)*100 + t->tm_mday;  //
 	
 	//만 나이 계산 
 	manAge = (todayDate - id)/10000;
