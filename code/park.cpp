@@ -2,7 +2,7 @@
 #include <stdio.h>
 int main () {
 	//변수 선언
-	int ticketCase, enterTime;
+	int ticketCase, enterTime, id, wooDae, myYear, myMonthDay, manAge, realAge, ticketPrice;
 	const int dayAdult = 56000, dayTeen = 50000, dayKid = 46000, dayBaby = 15000, a4Adult = 45000, a4Teen = 40000, a4Kid = 35000, a4Baby = 15000,
 	    	  dayAdultAll = 59000, dayTeenAll = 52000, dayKidAll = 47000, dayBabyAll = 15000, a4AdultAll = 48000, a4TeenAll = 42000, a4KidAll = 36000, a4BabyAll = 15000;
 
@@ -16,11 +16,36 @@ int main () {
 	printf("1. 1Day\n2. After4 (오후4시부터 입장)\n");
 	scanf("%d",&enterTime);
 	
-	//주민번호 입력 받기
+	//주민번호 입력 받기 , 변수 계산 
+	printf("\n주민등록번호를 입력해주세요. (6자리)\n");
+	scanf("%d",&id);
 	
-	//주민번호로 나이 판단하여 요금제 선정
+	myYear = id/10000;       // ex) 950306 > 95 
+	myMonthDay = id%10000;  // ex) 950306 > 306 
 	
-	//상시 우대사항 선택, 우대사항 적용
+	realAge = 22- myYear+1;
+	
+	if (realAge <= 0) {
+		//1900년대 출생자인 경우 
+		realAge += 100;
+	} 
+	
+	if ( myMonthDay <= 316) {
+		manAge= realAge -1;
+	} else {
+		manAge= realAge-2;
+	}
+	//주민번호로 만 나이 판단하여 요금제 선정 / 2022.03.16일 기준 
+	//36개월(만 2세)이상 ~ 만 12세 : 어린이요금
+	//만 13세 이상 ~ 만 18세 : 청소년 요금
+	//만 65세 이상 : 어린이요금
+	// 종합 vs 파크 > day vs 4After > 나이 
+	
+	//상시 우대사항 선택
+	printf("\n우대사항은 선택해주세요.\n1.없음(*만 65세 이상은 어린이요금 적용)\n2.장애인 우대\n3.국가유공자 우대\n4.휴가장병 우대\n5.임산부 우대\n6.다둥이 행복카드 우대\n");
+	scanf("%d",&wooDae);
+	
+	//임장료에 우대사항 적용 
 	
 	//입장료 총액 출력
 	
