@@ -4,7 +4,7 @@
 
 int main () {
 	//변수 선언
-	int ticketCase, enterTime, id, wooDae, myYear, myMonthDay, manAge, realAge, ticketPrice, ageCase, ticketTimeCase, again, todayDate;
+	int ticketCase, enterTime, id, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, again, todayDate;
 	const int dayAdult = 56000, dayTeen = 50000, dayKid = 46000, dayBaby = 15000, a4Adult = 45000, a4Teen = 40000, a4Kid = 35000, a4Baby = 15000,
 	    	  dayAdultAll = 59000, dayTeenAll = 52000, dayKidAll = 47000, dayBabyAll = 15000, a4AdultAll = 48000, a4TeenAll = 42000, a4KidAll = 36000, a4BabyAll = 15000;
 	//시간 불러오기 
