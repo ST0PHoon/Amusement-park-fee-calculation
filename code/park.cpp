@@ -1,10 +1,17 @@
 //놀이공원 요금 계산 
 #include <stdio.h>
+#include <time.h>
+
 int main () {
 	//변수 선언
-	int ticketCase, enterTime, id, wooDae, myYear, myMonthDay, manAge, realAge, ticketPrice, ageCase, ticketTimeCase, again;
+	int ticketCase, enterTime, id, wooDae, myYear, myMonthDay, manAge, realAge, ticketPrice, ageCase, ticketTimeCase, again, todayYear, todayMonth, todayDate;
 	const int dayAdult = 56000, dayTeen = 50000, dayKid = 46000, dayBaby = 15000, a4Adult = 45000, a4Teen = 40000, a4Kid = 35000, a4Baby = 15000,
 	    	  dayAdultAll = 59000, dayTeenAll = 52000, dayKidAll = 47000, dayBabyAll = 15000, a4AdultAll = 48000, a4TeenAll = 42000, a4KidAll = 36000, a4BabyAll = 15000;
+	//시간 불러오기 
+    time_t timer;
+    struct tm* t;
+    timer = time(NULL); // 1970년 1월 1일 0시 0분 0초부터 시작하여 현재까지의 초
+    t = localtime(&timer); // 포맷팅을 위해 구조체에 넣기
 
 	do {
 	// 이용권 종류 선택하기 (종합 or 파크)
@@ -25,18 +32,23 @@ int main () {
 	printf("\n우대사항은 선택해주세요.\n1.없음(*만 65세 이상은 어린이요금 적용)\n2.장애인 우대\n3.국가유공자 우대\n4.휴가장병 우대\n5.임산부 우대\n6.다둥이 행복카드 우대\n");
 	scanf("%d",&wooDae);
 	
+	//시간 입력 
+	todayYear = t->tm_year + 1900;
+	todayMonth = t->tm_mon + 1;
+	todayDate = t->tm_mday;
+	
 	//만 나이 계산 
 	myYear = id/10000;       // ex) 950306 > 95 
 	myMonthDay = id%10000;  // ex) 950306 > 306 
 	
-	realAge = 22- myYear+1;
+	realAge = todayYear%100 - myYear+1;
 	
 	if (realAge <= 0) {
 		//1900년대 출생자인 경우 
 		realAge += 100;
 	} 
 	
-	if ( myMonthDay <= 316) {
+	if ( myMonthDay <= (todayMonth*100+todayDate)) {
 		manAge= realAge -1;
 	} else {
 		manAge= realAge-2;
@@ -131,7 +143,7 @@ int main () {
 		printf("\n우대 사항이 없습니다.\n");
 	}
 	
-	//입장료 총액 출력
+	//입장료 총액 출력.
 	if (ticketPrice==0){
 		printf("\n무료 입장 입니다.");
 	}
