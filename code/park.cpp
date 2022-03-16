@@ -2,8 +2,7 @@
 #include <stdio.h>
 int main () {
 	//변수 선언
-	int ticketCase, enterTime, id, wooDae, myYear, myMonthDay, manAge, realAge, ticketPrice;
-	int ageCase, ticketTimeCase, again;
+	int ticketCase, enterTime, id, wooDae, myYear, myMonthDay, manAge, realAge, ticketPrice, ageCase, ticketTimeCase, again;
 	const int dayAdult = 56000, dayTeen = 50000, dayKid = 46000, dayBaby = 15000, a4Adult = 45000, a4Teen = 40000, a4Kid = 35000, a4Baby = 15000,
 	    	  dayAdultAll = 59000, dayTeenAll = 52000, dayKidAll = 47000, dayBabyAll = 15000, a4AdultAll = 48000, a4TeenAll = 42000, a4KidAll = 36000, a4BabyAll = 15000;
 
@@ -45,7 +44,7 @@ int main () {
 	
 	//나이 케이스 정립 / 2022.03.16 기준
 	// 0 ~ 12개월 미만 (만 0세) 는 무료 
-	// 베이비 (단체고객이 아니라면 무료)        (4)
+	// 12개월 이상 36개월 미만 : 베이비         (4)
 	//36개월(만 3세)이상 ~ 만 12세 : 어린이요금 (3)
 	//만 13세 이상 ~ 만 18세 : 청소년 요금      (2)
 	//만 65세 이상 : 어린이요금                 (1)
