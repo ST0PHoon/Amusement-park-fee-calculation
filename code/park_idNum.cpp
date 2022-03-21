@@ -182,5 +182,6 @@ int main () {
 		scanf("%d",&again); 
 	} while(again == 1);
 	
+	printf("\n이용해주셔서 감사합니다.");
 	return 0; 
 }
