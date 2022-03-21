@@ -4,7 +4,7 @@
 
 int main () {
 	//변수 선언
-	int ticketCase, enterTime, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, again, todayDate, idFront, idBack, yyyymmdd;
+	int ticketCase, enterTime, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, again, todayDate, idFront, idBack, idBackFirst, yyyymmdd;
 	const int DAY_ADULT = 56000, DAY_TEEN = 50000, DAY_KID = 46000, DAY_BABY = 15000, AFTER4_ADULT = 45000, AFTER4_TEEN = 40000, AFTER4_KID = 35000, AFTER4_BABY = 15000,
 	    	  DAY_ADULT_ALL = 59000, DAY_TEEN_ALL = 52000, DAY_KID_ALL = 47000, DAY_BABY_ALL = 15000, AFTER4_ADULT_ALL = 48000, AFTER4_TEEN_ALL = 42000, AFTER4_KID_ALL = 36000, AFTER4_BABY_ALL = 15000,
 			  OLDMAN_AGE=65, TEEN_AGE_MAX=18, TEEN_KID_AGE=13, KID_BABY_AGE=3, BABY_AGE_MIN=1;
@@ -36,19 +36,22 @@ int main () {
 			//상시 우대사항 선택
 			printf("\n우대사항은 선택해주세요.\n1.없음(*만 65세 이상은 어린이요금 적용)\n2.장애인 우대\n3.국가유공자 우대\n4.휴가장병 우대\n5.임산부 우대\n6.다둥이 행복카드 우대\n");
 			scanf("%d",&wooDae);
+			
+			//필요한 변수 계산 
+			idBackFirst = idBack/1000000;
 				
 			//입력 오류 
-			if ( ticketCase> 2 || enterTime >2 || wooDae>6){
+			if ( ticketCase>2 || enterTime > 2|| wooDae>6 || idBackFirst >4 || idBackFirst<1){
 				printf("입력이 잘못되었습니다. 다시 입력해주세요\n\n");
 			} 
-		} while(ticketCase>2 || enterTime > 2|| wooDae>6) ;
+		} while(ticketCase>2 || enterTime > 2|| wooDae>6 || idBackFirst >4 || idBackFirst<1) ;
 
 		//시간 입력 
 		todayDate= (t->tm_year + 1900)*10000 + (t->tm_mon + 1)*100 + t->tm_mday;  //20220316 형태로 변형 
 		
 		
 		//1900년생, 2000년생 분류
-		if (idBack/1000000 >=3) { //2000년대생 
+		if (idBackFirst ==3 || idBackFirst == 4) { //2000년대생 
 			yyyymmdd = idFront + 20000000;
 		} else {                  //1900년대생 
 			yyyymmdd = idFront + 19000000;
