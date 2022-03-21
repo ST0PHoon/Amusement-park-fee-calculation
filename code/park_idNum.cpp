@@ -6,7 +6,8 @@ int main () {
 	//변수 선언
 	int ticketCase, enterTime, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, again, todayDate, idFront, idBack, yyyymmdd;
 	const int DAY_ADULT = 56000, DAY_TEEN = 50000, DAY_KID = 46000, DAY_BABY = 15000, AFTER4_ADULT = 45000, AFTER4_TEEN = 40000, AFTER4_KID = 35000, AFTER4_BABY = 15000,
-	    	  DAY_ADULT_ALL = 59000, DAY_TEEN_ALL = 52000, DAY_KID_ALL = 47000, DAY_BABY_ALL = 15000, AFTER4_ADULT_ALL = 48000, AFTER4_TEEN_ALL = 42000, AFTER4_KID_ALL = 36000, AFTER4_BABY_ALL = 15000;
+	    	  DAY_ADULT_ALL = 59000, DAY_TEEN_ALL = 52000, DAY_KID_ALL = 47000, DAY_BABY_ALL = 15000, AFTER4_ADULT_ALL = 48000, AFTER4_TEEN_ALL = 42000, AFTER4_KID_ALL = 36000, AFTER4_BABY_ALL = 15000,
+			  OLDMAN_AGE=65, TEEN_AGE_MAX=18, TEEN_KID_AGE=13, KID_BABY_AGE=3, BABY_AGE_MIN=1;
 	//시간 불러오기 
     time_t timer;
     struct tm* t;
@@ -62,11 +63,11 @@ int main () {
 		//36개월(만 3세)이상 ~ 만 12세 : 어린이요금 (3)
 		//만 13세 이상 ~ 만 18세 : 청소년 요금      (2)
 		//만 65세 이상 : 어린이요금                 (1)
-		if ( manAge <3 && manAge >=1) { 
+		if ( manAge <KID_BABY_AGE && manAge >=BABY_AGE_MIN) { 
 			ageCase=4; // 베이비 
-		} else if ((manAge >= 3 && manAge <13) || manAge >= 65 ) {
-			ageCase = 3; // 어린이 
-		} else if (manAge >= 13 && manAge <= 18) {
+		} else if ((manAge >= KID_BABY_AGE && manAge <TEEN_KID_AGE) || manAge >= OLDMAN_AGE ) {
+			ageCase = 3; // 어린이 + 노인 
+		} else if (manAge >= TEEN_KID_AGE && manAge <= TEEN_AGE_MAX) {
 			ageCase = 2; //청소년 
 		} else {
 			ageCase = 1; // 어른 
