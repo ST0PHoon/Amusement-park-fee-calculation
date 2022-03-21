@@ -7,12 +7,12 @@ int main () {
 	int ticketCase, enterTime, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, again, todayDate, idFront, idBack, idBackFirst, yyyymmdd;
 	const int DAY_ADULT = 56000, DAY_TEEN = 50000, DAY_KID = 46000, DAY_BABY = 15000, AFTER4_ADULT = 45000, AFTER4_TEEN = 40000, AFTER4_KID = 35000, AFTER4_BABY = 15000,
 	    	  DAY_ADULT_ALL = 59000, DAY_TEEN_ALL = 52000, DAY_KID_ALL = 47000, DAY_BABY_ALL = 15000, AFTER4_ADULT_ALL = 48000, AFTER4_TEEN_ALL = 42000, AFTER4_KID_ALL = 36000, AFTER4_BABY_ALL = 15000,
-			  OLDMAN_AGE=65, TEEN_AGE_MAX=18, TEEN_KID_AGE=13, KID_BABY_AGE=3, BABY_AGE_MIN=1;
+	    	  OLDMAN_AGE=65, TEEN_AGE_MAX=18, TEEN_KID_AGE=13, KID_BABY_AGE=3, BABY_AGE_MIN=1;
 	//시간 불러오기 
-    time_t timer;
-    struct tm* t;
-    timer = time(NULL); // 1970년 1월 1일 0시 0분 0초부터 시작하여 현재까지의 초
-    t = localtime(&timer); // 포맷팅을 위해 구조체에 넣기
+	time_t timer;
+	struct tm* t;
+	timer = time(NULL); // 1970년 1월 1일 0시 0분 0초부터 시작하여 현재까지의 초
+	t = localtime(&timer); // 포맷팅을 위해 구조체에 넣기
 
 	do {
 		//변수 초기 화
@@ -61,11 +61,6 @@ int main () {
 		manAge = (todayDate - yyyymmdd)/10000;
 		
 		//나이 케이스 정립
-		// 0 ~ 12개월 미만 (만 0세) 는 무료 
-		// 12개월 이상 36개월 미만 : 베이비         (4)
-		//36개월(만 3세)이상 ~ 만 12세 : 어린이요금 (3)
-		//만 13세 이상 ~ 만 18세 : 청소년 요금      (2)
-		//만 65세 이상 : 어린이요금                 (1)
 		if ( manAge <KID_BABY_AGE && manAge >=BABY_AGE_MIN) { 
 			ageCase=4; // 베이비 
 		} else if ((manAge >= KID_BABY_AGE && manAge <TEEN_KID_AGE) || manAge >= OLDMAN_AGE ) {
