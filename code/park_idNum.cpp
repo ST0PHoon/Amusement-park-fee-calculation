@@ -4,9 +4,13 @@
 
 int main () {
 	//변수 선언
-	int ticketCase, enterTime, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, again, todayDate, idFront, idFrontMonth, idFrontDay, idBack, idBackFirst, yyyymmdd;
-	const int DAY_ADULT = 56000, DAY_TEEN = 50000, DAY_KID = 46000, DAY_BABY = 15000, AFTER4_ADULT = 45000, AFTER4_TEEN = 40000, AFTER4_KID = 35000, AFTER4_BABY = 15000,
-	    	  DAY_ADULT_ALL = 59000, DAY_TEEN_ALL = 52000, DAY_KID_ALL = 47000, DAY_BABY_ALL = 15000, AFTER4_ADULT_ALL = 48000, AFTER4_TEEN_ALL = 42000, AFTER4_KID_ALL = 36000, AFTER4_BABY_ALL = 15000,
+	int ticketCase, enterTime, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, again,
+		todayDate, idFront, idFrontMonth, idFrontDay, idBack, idBackFirst, yyyymmdd;
+		
+	const int DAY_ADULT = 56000, DAY_TEEN = 50000, DAY_KID = 46000, DAY_BABY = 15000,
+	    	  DAY_ADULT_ALL = 59000, DAY_TEEN_ALL = 52000, DAY_KID_ALL = 47000, DAY_BABY_ALL = 15000,
+	    	  AFTER4_ADULT = 45000, AFTER4_TEEN = 40000, AFTER4_KID = 35000, AFTER4_BABY = 15000,
+	    	  AFTER4_ADULT_ALL = 48000, AFTER4_TEEN_ALL = 42000, AFTER4_KID_ALL = 36000, AFTER4_BABY_ALL = 15000,
 	    	  OLDMAN_AGE=65, TEEN_AGE_MAX=18, TEEN_KID_AGE=13, KID_BABY_AGE=3, BABY_AGE_MIN=1;
 	//시간 불러오기 
 	time_t timer;
@@ -14,8 +18,7 @@ int main () {
 	timer = time(NULL); // 1970년 1월 1일 0시 0분 0초부터 시작하여 현재까지의 초
 	t = localtime(&timer); // 포맷팅을 위해 구조체에 넣기
 
-	do {
-		//변수 초기 화
+	do { //변수 초기화 
 		ticketCase = 0, enterTime=0, wooDae=0, idFront=0, idBack=0;
 		
 		// 이용권 종류 선택하기 (종합 or 파크)
@@ -23,6 +26,7 @@ int main () {
 			printf("\n이용권의 종류를 선택해주세요.\n");
 			printf("1. 종합이용권 (롯데월드+민속박물관)\n2. 파크이용권 (롯데월드)\n");
 			scanf("%d",&ticketCase);
+			
 			if (ticketCase >2) {
 				printf("보기 중에서 선택해주세요.\n\n");
 			}
@@ -33,6 +37,7 @@ int main () {
 			printf("\n입장시간에 따른 이용권을 선택해 주세요.\n");
 			printf("1. 1Day\n2. After4 (오후4시부터 입장)\n");
 			scanf("%d",&enterTime);
+			
 			if (enterTime >2) {
 				printf("보기 중에서 선택해주세요.\n\n");
 			}
@@ -43,29 +48,29 @@ int main () {
 			printf("\n주민등록번호를 입력해주세요. ('-'대신 한칸 띄워주세요. ex) 051225 3152135)\n");
 			scanf("%6d %7d",&idFront, &idBack);
 			
-			//필요한 변수 계산 
 			idBackFirst = idBack/1000000;
 			idFrontMonth = (idFront/100)%100;
 			idFrontDay = idFront%100;
 			//윤년이 아닌 경우의 2월 29일은 미분류 상 태 
-			if(idBackFirst >4 || idBackFirst<1 || idFrontDay>31 || idFrontDay<1 || idFrontMonth >12 || idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)) {
+			if(idBackFirst >4 || idBackFirst<1 || idFrontDay>31 || idFrontDay<1 || idFrontMonth >12 ||
+					idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)) {
 				printf("양식에 맞게 다시 입력해주세요.\n\n");
 			}
-		} while(idBackFirst >4 || idBackFirst<1 || idFrontDay>31 || idFrontDay<1 || idFrontMonth >12 || idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)) ;	
+		} while(idBackFirst >4 || idBackFirst<1 || idFrontDay>31 || idFrontDay<1 || idFrontMonth >12 ||
+					idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)) ;	
 		
-			//상시 우대사항 선택
+		//상시 우대사항 선택
 		do {	
 			printf("\n우대사항은 선택해주세요.\n1.없음(*만 65세 이상은 어린이요금 적용)\n2.장애인 우대\n3.국가유공자 우대\n4.휴가장병 우대\n5.임산부 우대\n6.다둥이 행복카드 우대\n");
 			scanf("%d",&wooDae);
-
+			
 			if ( wooDae>6 ){
 				printf("보기 중에서 선택해주세요.\n\n");
 			} 
 		} while(wooDae>6) ;
 
 		//시간 입력 
-		todayDate= (t->tm_year + 1900)*10000 + (t->tm_mon + 1)*100 + t->tm_mday;  //20220316 형태로 변형 
-		
+		todayDate= (t->tm_year + 1900)*10000 + (t->tm_mon + 1)*100 + t->tm_mday;  //20220101 형태로 변형 
 		
 		//1900년생, 2000년생 분류
 		if (idBackFirst ==3 || idBackFirst == 4) { //2000년대생 
@@ -149,7 +154,7 @@ int main () {
 	
 		//임장료에 우대사항 적용
 		if (wooDae == 2) {
-			ticketPrice = ticketPrice/2 ; // 모든 티켓 50퍼 우대 
+			ticketPrice = ticketPrice/2 ; //종합 + 파크 이용권 우대  
 		} else if (wooDae == 3) {
 			ticketPrice = ticketPrice/2 ;
 		} else if (wooDae == 4 && ticketCase==1) { //종합이용권만 우대 
