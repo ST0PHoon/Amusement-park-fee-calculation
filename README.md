@@ -6,4 +6,4 @@
  2. 우대 할인을 적용 합니다.
  3. 입력 오류시 재입력을 요청합니다. (단, 주민번호 제외)
 
-![놀이동산캡쳐](https://user-images.githubusercontent.com/95601950/159195129-65cccaa0-eee8-45e0-9ec6-b7cd09dcd345.PNG)
+![놀이동산캡쳐2](https://user-images.githubusercontent.com/95601950/159195226-f6ae943c-ac38-42e5-8a1d-8864623bdd64.png)
