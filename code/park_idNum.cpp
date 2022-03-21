@@ -4,9 +4,9 @@
 
 int main () {
 	//변수 선언
-	int ticketCase, enterTime, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, again, todayDate, idFront, idBack, YYYYMMDD;
-	const int dayAdult = 56000, dayTeen = 50000, dayKid = 46000, dayBaby = 15000, a4Adult = 45000, a4Teen = 40000, a4Kid = 35000, a4Baby = 15000,
-	    	  dayAdultAll = 59000, dayTeenAll = 52000, dayKidAll = 47000, dayBabyAll = 15000, a4AdultAll = 48000, a4TeenAll = 42000, a4KidAll = 36000, a4BabyAll = 15000;
+	int ticketCase, enterTime, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, again, todayDate, idFront, idBack, yyyymmdd;
+	const int DAY_ADULT = 56000, DAY_TEEN = 50000, DAY_KID = 46000, DAY_BABY = 15000, AFTER4_ADULT = 45000, AFTER4_TEEN = 40000, AFTER4_KID = 35000, AFTER4_BABY = 15000,
+	    	  DAY_ADULT_ALL = 59000, DAY_TEEN_ALL = 52000, DAY_KID_ALL = 47000, DAY_BABY_ALL = 15000, AFTER4_ADULT_ALL = 48000, AFTER4_TEEN_ALL = 42000, AFTER4_KID_ALL = 36000, AFTER4_BABY_ALL = 15000;
 	//시간 불러오기 
     time_t timer;
     struct tm* t;
@@ -14,145 +14,149 @@ int main () {
     t = localtime(&timer); // 포맷팅을 위해 구조체에 넣기
 
 	do {
-	// 이용권 종류 선택하기 (종합 or 파크)
-	printf("\n이용권의 종류를 선택해주세요.\n");
-	printf("1. 종합이용권 (롯데월드+민속박물관)\n2. 파크이용권 (롯데월드)\n");
-	scanf("%d",&ticketCase);
-
-	//주,야간권 선택 메세지 출력 & 입력받기 
-	printf("\n입장시간에 따른 이용권을 선택해 주세요.\n");
-	printf("1. 1Day\n2. After4 (오후4시부터 입장)\n");
-	scanf("%d",&enterTime);
-	
-	//주민번호 입력 받기 , 변수 계산 
-	printf("\n주민등록번호를 입력해주세요. ('-'대신 한칸 띄워주세요. ex) 051225 3351110)\n");
-	scanf("%6d %7d",&idFront, &idBack);
-	
-	//상시 우대사항 선택
-	printf("\n우대사항은 선택해주세요.\n1.없음(*만 65세 이상은 어린이요금 적용)\n2.장애인 우대\n3.국가유공자 우대\n4.휴가장병 우대\n5.임산부 우대\n6.다둥이 행복카드 우대\n");
-	scanf("%d",&wooDae);
-	
-	//입력 오류 
-	if ( ticketCase> 2 || enterTime >2 || wooDae>6){
-		printf("입력이 잘못되었습니다.");
-		break;
-	} 
-	
-	//시간 입력 
-	todayDate= (t->tm_year + 1900)*10000 + (t->tm_mon + 1)*100 + t->tm_mday;  //20220316 형태로 변형 
-	
-	
-	//1900년생, 2000년생 분류
-	if (idBack/1000000 >=3) { //2000년대생 
-		YYYYMMDD = idFront + 20000000;
-	} else {                  //1900년대생 
-		YYYYMMDD = idFront + 19000000;
-	} 
-
-	//만 나이 계산 
-	manAge = (todayDate - YYYYMMDD)/10000;
-	
-	//나이 케이스 정립
-	// 0 ~ 12개월 미만 (만 0세) 는 무료 
-	// 12개월 이상 36개월 미만 : 베이비         (4)
-	//36개월(만 3세)이상 ~ 만 12세 : 어린이요금 (3)
-	//만 13세 이상 ~ 만 18세 : 청소년 요금      (2)
-	//만 65세 이상 : 어린이요금                 (1)
-	if ( manAge <3 && manAge >=1) { 
-		ageCase=4; // 베이비 
-	} else if ((manAge >= 3 && manAge <13) || manAge >= 65 ) {
-		ageCase = 3; // 어린이 
-	} else if (manAge >= 13 && manAge <= 18) {
-		ageCase = 2; //청소년 
-	} else {
-		ageCase = 1; // 어른 
-	}
+		//변수 초기 화
+		ticketCase = 0, enterTime=0, wooDae=0;
 		
-	//이용권 종류 , 주야간권 종류에 따른 케이스 분류 
-	if (ticketCase==1 && enterTime==1) {
-		ticketTimeCase = 1; //종합 + 1Day 
-	} else if (ticketCase==1 && enterTime==2) {
-		ticketTimeCase =2; //종합 + 4시후 
-	} else if (ticketCase == 2 && enterTime == 1) {
-		ticketTimeCase = 3; //파크 + 1Day 
-	} else {
-		ticketTimeCase = 4; // 파크 + 4시후 
-	} 
-	
-	//우대사항 이전, 요금 선정
-	if ( ageCase == 1) { // 어른이고  
-		if (ticketTimeCase== 1) {        // 종합 + 1Day 
-			ticketPrice= dayAdultAll;
-		} else if (ticketTimeCase==2) {  //종합 + 4시후
-			ticketPrice= a4AdultAll;
-		}else if (ticketTimeCase ==3) {  //파크 + 1Day 
-			ticketPrice= dayAdult;
-		} else {                        // 파크 + 4시후 
-			ticketPrice= a4Adult;
-		}
-	} else if ( ageCase == 2) {  // 청소년  
-		if (ticketTimeCase== 1) {
-			ticketPrice=dayTeenAll;
-		} else if (ticketTimeCase==2) {
-			ticketPrice=a4TeenAll;
-		}else if (ticketTimeCase ==3) {
-			ticketPrice=dayTeen;
-		} else {
-			ticketPrice=a4Teen;
-		}
-	} else if ( ageCase == 3) { //어린이 + 노인 
-		if (ticketTimeCase== 1) {
-			ticketPrice=dayKidAll;
-		} else if (ticketTimeCase==2) {
-			ticketPrice=a4KidAll;
-		}else if (ticketTimeCase ==3) {
-			ticketPrice=dayKid;
-		} else {
-			ticketPrice=a4Kid;
-		}
-	} else {                  // 애기 
-		if (ticketTimeCase== 1) {
-			ticketPrice=dayBabyAll;
-		} else if (ticketTimeCase==2) {
-			ticketPrice=a4BabyAll;
-		}else if (ticketTimeCase ==3) {
-			ticketPrice=dayBaby;
-		} else {
-			ticketPrice=a4Baby;
-		}
-	}
-	
-	//12개월 미만의 경우
-	if ( manAge == 0) {
-		ticketPrice = 0;
-	} 
+		do {
+			// 이용권 종류 선택하기 (종합 or 파크)
+			printf("\n이용권의 종류를 선택해주세요.\n");
+			printf("1. 종합이용권 (롯데월드+민속박물관)\n2. 파크이용권 (롯데월드)\n");
+			scanf("%d",&ticketCase);
+			
+			//주,야간권 선택 메세지 출력 & 입력받기 
+			printf("\n입장시간에 따른 이용권을 선택해 주세요.\n");
+			printf("1. 1Day\n2. After4 (오후4시부터 입장)\n");
+			scanf("%d",&enterTime);
+				
+			//주민번호 입력 받기 , 변수 계산 
+			printf("\n주민등록번호를 입력해주세요. ('-'대신 한칸 띄워주세요. ex) 051225 3152135\n");
+			scanf("%6d %7d",&idFront, &idBack);
+				
+			//상시 우대사항 선택
+			printf("\n우대사항은 선택해주세요.\n1.없음(*만 65세 이상은 어린이요금 적용)\n2.장애인 우대\n3.국가유공자 우대\n4.휴가장병 우대\n5.임산부 우대\n6.다둥이 행복카드 우대\n");
+			scanf("%d",&wooDae);
+				
+			//입력 오류 
+			if ( ticketCase> 2 || enterTime >2 || wooDae>6){
+				printf("입력이 잘못되었습니다. 다시 입력해주세요\n\n");
+			} 
+		} while(ticketCase>2 || enterTime > 2|| wooDae>6) ;
 
-	//임장료에 우대사항 적용
-	if (wooDae == 2) {
-		ticketPrice = ticketPrice/2 ; // 모든 티켓 50퍼 우대 
-	} else if (wooDae == 3) {
-		ticketPrice = ticketPrice/2 ;
-	} else if (wooDae == 4 && ticketCase==1) { //종합이용권만 우대 
-		ticketPrice = ticketPrice * 0.51;
-	} else if (wooDae == 5 && ticketCase==1 ) {
-		ticketPrice = ticketPrice/2;
-	} else if (wooDae == 6 && ticketCase==1) {
-		ticketPrice = ticketPrice*0.7;
-	} else {
-		printf("\n우대 사항이 없습니다.\n");
-	}
+		//시간 입력 
+		todayDate= (t->tm_year + 1900)*10000 + (t->tm_mon + 1)*100 + t->tm_mday;  //20220316 형태로 변형 
+		
+		
+		//1900년생, 2000년생 분류
+		if (idBack/1000000 >=3) { //2000년대생 
+			yyyymmdd = idFront + 20000000;
+		} else {                  //1900년대생 
+			yyyymmdd = idFront + 19000000;
+		} 
 	
-	//입장료 총액 출력.
-	if (ticketPrice==0){
-		printf("\n무료 입장 입니다.\n");
-	}
-	else {
-		printf ("\n가격은 %d원 입니다.\n",ticketPrice) ;
-	}
+		//만 나이 계산 
+		manAge = (todayDate - yyyymmdd)/10000;
+		
+		//나이 케이스 정립
+		// 0 ~ 12개월 미만 (만 0세) 는 무료 
+		// 12개월 이상 36개월 미만 : 베이비         (4)
+		//36개월(만 3세)이상 ~ 만 12세 : 어린이요금 (3)
+		//만 13세 이상 ~ 만 18세 : 청소년 요금      (2)
+		//만 65세 이상 : 어린이요금                 (1)
+		if ( manAge <3 && manAge >=1) { 
+			ageCase=4; // 베이비 
+		} else if ((manAge >= 3 && manAge <13) || manAge >= 65 ) {
+			ageCase = 3; // 어린이 
+		} else if (manAge >= 13 && manAge <= 18) {
+			ageCase = 2; //청소년 
+		} else {
+			ageCase = 1; // 어른 
+		}
+			
+		//이용권 종류 , 주야간권 종류에 따른 케이스 분류 
+		if (ticketCase==1 && enterTime==1) {
+			ticketTimeCase = 1; //종합 + 1Day 
+		} else if (ticketCase==1 && enterTime==2) {
+			ticketTimeCase =2; //종합 + 4시후 
+		} else if (ticketCase == 2 && enterTime == 1) {
+			ticketTimeCase = 3; //파크 + 1Day 
+		} else {
+			ticketTimeCase = 4; // 파크 + 4시후 
+		} 
+		
+		//우대사항 이전, 요금 선정
+		if ( ageCase == 1) { // 어른이고  
+			if (ticketTimeCase== 1) {        // 종합 + 1Day 
+				ticketPrice= DAY_ADULT_ALL;
+			} else if (ticketTimeCase==2) {  //종합 + 4시후
+				ticketPrice= AFTER4_ADULT_ALL;
+			}else if (ticketTimeCase ==3) {  //파크 + 1Day 
+				ticketPrice= DAY_ADULT;
+			} else {                        // 파크 + 4시후 
+				ticketPrice= AFTER4_ADULT;
+			}
+		} else if ( ageCase == 2) {  // 청소년  
+			if (ticketTimeCase== 1) {
+				ticketPrice=DAY_TEEN_ALL;
+			} else if (ticketTimeCase==2) {
+				ticketPrice=AFTER4_TEEN_ALL;
+			}else if (ticketTimeCase ==3) {
+				ticketPrice=DAY_TEEN;
+			} else {
+				ticketPrice=AFTER4_TEEN;
+			}
+		} else if ( ageCase == 3) { //어린이 + 노인 
+			if (ticketTimeCase== 1) {
+				ticketPrice=DAY_KID_ALL;
+			} else if (ticketTimeCase==2) {
+				ticketPrice=AFTER4_KID_ALL;
+			}else if (ticketTimeCase ==3) {
+				ticketPrice=DAY_KID;
+			} else {
+				ticketPrice=AFTER4_KID;
+			}
+		} else {                  // 애기 
+			if (ticketTimeCase== 1) {
+				ticketPrice=DAY_BABY_ALL;
+			} else if (ticketTimeCase==2) {
+				ticketPrice=AFTER4_BABY_ALL;
+			}else if (ticketTimeCase ==3) {
+				ticketPrice=DAY_BABY;
+			} else {
+				ticketPrice=AFTER4_BABY;
+			}
+		}
+		
+		//12개월 미만의 경우
+		if ( manAge == 0) {
+			ticketPrice = 0;
+		} 
 	
-	//이어서 예매할지 선택 
-	printf("\n이어서 이용권을 구매하시겠습니까?\n1.예\n2.아니요\n");
-	scanf("%d",&again); 
+		//임장료에 우대사항 적용
+		if (wooDae == 2) {
+			ticketPrice = ticketPrice/2 ; // 모든 티켓 50퍼 우대 
+		} else if (wooDae == 3) {
+			ticketPrice = ticketPrice/2 ;
+		} else if (wooDae == 4 && ticketCase==1) { //종합이용권만 우대 
+			ticketPrice = ticketPrice * 0.51;
+		} else if (wooDae == 5 && ticketCase==1 ) {
+			ticketPrice = ticketPrice/2;
+		} else if (wooDae == 6 && ticketCase==1) {
+			ticketPrice = ticketPrice*0.7;
+		} else {
+			printf("\n우대 사항이 없습니다.\n");
+		}
+		
+		//입장료 총액 출력.
+		if (ticketPrice==0){
+			printf("\n무료 입장 입니다.\n");
+		}
+		else {
+			printf ("\n가격은 %d원 입니다.\n",ticketPrice) ;
+		}
+		
+		//이어서 예매할지 선택 
+		printf("\n이어서 이용권을 구매하시겠습니까?\n1.예\n2.아니요\n");
+		scanf("%d",&again); 
 	} while(again == 1);
 	
 	return 0; 
