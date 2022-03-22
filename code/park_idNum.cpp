@@ -7,7 +7,7 @@ int main () {
 	int ticketCase, enterTime, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, again, totalTicketPrice,
 		todayDate, idFront, idFrontMonth, idFrontDay, idBack, idBackFirst, yyyymmdd, counter;
 		
-	int ticketTimeCase[10], wooDaeArr[10], ageCaseArr[10], ticketPriceArr[10];
+	int ticketTimeCaseArr[10], wooDaeArr[10], ageCaseArr[10], ticketPriceArr[10];
 		
 	const int DAY_ADULT = 56000, DAY_TEEN = 50000, DAY_KID = 46000, DAY_BABY = 15000,
 	    	  DAY_ADULT_ALL = 59000, DAY_TEEN_ALL = 52000, DAY_KID_ALL = 47000, DAY_BABY_ALL = 15000,
@@ -90,11 +90,11 @@ int main () {
 		//나이 케이스 정립
 		if ( manAge <KID_BABY_AGE && manAge >=BABY_AGE_MIN) { 
 			ageCase=4; // 베이비 
-		} else if ((manAge >= KID_BABY_AGE && manAge <TEEN_KID_AGE) || manAge >= OLDMAN_AGE ) {
+		} else if ((manAge >= KID_BABY_AGE && manAge <TEEN_KID_AGE)) {
 			ageCase = 3; // 어린이 + 노인 
 		} else if (manAge >= TEEN_KID_AGE && manAge <= TEEN_AGE_MAX) {
 			ageCase = 2; //청소년 
-		} else if () {
+		} else if ( manAge >= OLDMAN_AGE ) {
 			ageCase = 5;
 		} else {
 			ageCase = 1; // 어른 
@@ -192,14 +192,29 @@ int main () {
 			printf ("\n가격은 %d원 입니다.\n",ticketPrice) ;
 		}
 		
+		//선택사항 별, 행렬에 담기
+		ticketTimeCaseArr[counter] = ticketTimeCase;
+		wooDaeArr[counter] = wooDae;
+		ageCaseArr[counter] = ageCase;
+		ticketPriceArr[counter] = ticketPrice;
+		totalTicketPrice += ticketPrice;
+		
+		//counter에 1추가, 초기값은 0 
+		counter++; 
+		
 		//이어서 예매할지 선택 
 		printf("\n이어서 이용권을 구매하시겠습니까?\n1.예\n2.아니요\n");
 		scanf("%d",&again); 
 	} while(again == 1);
 	
-	//영수증 출력
-	 
+	printf("\n이용해주셔서 감사합니다.\n");
 	
-	printf("\n이용해주셔서 감사합니다.");
+	// 영수증 출력
+	printf("\n==================== 행복랜드 ====================\n") ;
+	for (int i = 0; i < counter; i++) {
+		printf("%d회 구매자, 티켓종류: %d, 나이: %d, 가격: %d, 우대사항: %d\n",i+1 , ticketTimeCaseArr[i], ageCaseArr[i], ticketPriceArr[i], wooDaeArr[i]);
+	}
+	printf("입장료 총액은 %d원 입니다.\n", totalTicketPrice);
+	 
 	return 0; 
 }
