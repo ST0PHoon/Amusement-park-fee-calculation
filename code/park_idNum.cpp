@@ -224,20 +224,20 @@ int main () {
 	
 	// 영수증 출력
 	printf("\n\n======================================== %s ========================================\n","행복랜드") ;
-	printf("%16s%13s%12s%14s%24s\n","선택사항","연 령","매수","가격","우대사항");
+	printf("%s\t\t%s\t     %s\t  %s\t\t\t%s\n","선택사항","연  령","매수","가격","우대사항");
 	for (int i =0; i<counter; i++) {
 		switch (ticketTimeCaseArr[i]) {
 			case 1:
-				printf("%16s","종합이용권  1Day ");
+				printf("%s\t%s","종합이용권","1Day");
 				break;
 			case 2:
-				printf("%16s","종합이용권 After4");
+				printf("%s\t%s","종합이용권","After4");
 				break;
 			case 3:
-				printf("%16s","파크이용권  1Day ");
+				printf("%s\t%s","파크이용권","1Day");
 				break;
 			case 4:
-				printf("%16s","파크이용권 After4");
+				printf("%s\t%s","파크이용권","After4");
 				break;
 			default:
 				break;
@@ -245,47 +245,47 @@ int main () {
 		
 		switch (ageCaseArr[i]) {
 			case 1:
-				printf("%12s","어 른");
+				printf("\t%s","어  른");
 				break;
 			case 2:
-				printf("%12s","청소년");
+				printf("\t%s","청소년");
 				break;
 			case 3:
-				printf("%12s","어린이");
+				printf("\t%s","어린이");
 				break;
 			case 4:
-				printf("%12s","유 아");
+				printf("\t%s","유  아");
 				break;
 			case 5:
-				printf("%12s","노 인");
+				printf("\t%s","노  인");
 				break;
 			case 6:
-				printf("%12s","영 아");
+				printf("\t%s","영  아");
 				break;
 			default:
 				break;
 		}
 		
-		printf("%10d%16d원\t",ticketSuArr[i],ticketPriceArr[i]) ;
+		printf("%10d%14d원\t",ticketSuArr[i],ticketPriceArr[i]) ;
 		
 		switch (wooDaeArr[i]) {
 			case 1:
-				printf("%-22s\n","우대사항 없음");
+				printf("\t%s\n","우대사항 없음");
 				break;
 			case 2:
-				printf("%-22s\n","장애인 우대");
+				printf("\t%s\n","장애인 우대");
 				break;
 			case 3:
-				printf("%-22s\n","국가유공자 우대");
+				printf("\t%s\n","국가유공자 우대");
 				break;
 			case 4:
-				printf("%-22s\n","휴가장병 우대");
+				printf("\t%s\n","휴가장병 우대");
 				break;
 			case 5:
-				printf("%-22s\n","임산부 우대");
+				printf("\t%s\n","임산부 우대");
 				break;
 			case 6:
-				printf("%-22s\n","다둥이 행복카드 우대");
+				printf("\t%s\n","다둥이 행복카드 우대");
 				break;
 			default:
 				break;
