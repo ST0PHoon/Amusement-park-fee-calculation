@@ -14,6 +14,8 @@ int main () {
 	    	  AFTER4_ADULT = 45000, AFTER4_TEEN = 40000, AFTER4_KID = 35000, AFTER4_BABY = 15000,
 	    	  AFTER4_ADULT_ALL = 48000, AFTER4_TEEN_ALL = 42000, AFTER4_KID_ALL = 36000, AFTER4_BABY_ALL = 15000,
 	    	  OLDMAN_AGE=65, TEEN_AGE_MAX=18, TEEN_KID_AGE=13, KID_BABY_AGE=3, BABY_AGE_MIN=1;
+	    	  
+	char bills1[10] = "구매사항", bills2[10] = "연령", bills3[10] = "매수", bills4[10] = "가격", bills5[10] = "우대사항";
 	//시간 불러오기 
 	time_t timer;
 	struct tm* t;
@@ -22,7 +24,7 @@ int main () {
 
 	do { //변수 초기화 
 		ticketCase=0, enterTime=0, wooDae=0, ticketSu=0, idFront=0, idBack=0;
-		
+		printf("================= 행복랜드 이용권 구매 =================\n") ;
 		// 이용권 종류 선택하기 (종합 or 파크)
 		do {
 			printf("\n이용권의 종류를 선택해주세요.\n");
@@ -101,11 +103,11 @@ int main () {
 		if ( manAge <KID_BABY_AGE && manAge >=BABY_AGE_MIN) { 
 			ageCase=4; // 베이비 
 		} else if ((manAge >= KID_BABY_AGE && manAge <TEEN_KID_AGE)) {
-			ageCase = 3; // 어린이 + 노인 
+			ageCase = 3; // 어린이 
 		} else if (manAge >= TEEN_KID_AGE && manAge <= TEEN_AGE_MAX) {
 			ageCase = 2; //청소년 
 		} else if ( manAge >= OLDMAN_AGE ) {
-			ageCase = 5;
+			ageCase = 5; //노 인  
 		} else {
 			ageCase = 1; // 어른 
 		}
@@ -177,6 +179,7 @@ int main () {
 		//12개월 미만의 경우
 		if ( manAge == 0) {
 			ticketPrice = 0;
+			ageCase = 6;
 		} 
 	
 		//임장료에 우대사항 적용
@@ -190,8 +193,6 @@ int main () {
 			ticketPrice = ticketPrice/2;
 		} else if (wooDae == 6 && ticketCase==1) {
 			ticketPrice = ticketPrice*0.7;
-		} else {
-			printf("\n우대 사항이 없습니다.\n");
 		}
 		//최종 가격
 		ticketPrice *= ticketSu;
@@ -201,7 +202,7 @@ int main () {
 			printf("\n무료 입장 입니다.\n");
 		}
 		else {
-			printf ("\n가격은 %d원 입니다.\n",ticketPrice) ;
+			printf ("\n%d매의  총금액은 %d원 입니다.\n",ticketSu,ticketPrice) ;
 		}
 		
 		//선택사항 별, 행렬에 담기
@@ -223,12 +224,101 @@ int main () {
 	printf("\n이용해주셔서 감사합니다.\n");
 	
 	// 영수증 출력
-	printf("\n==================== 행복랜드 ====================\n") ;
-	for (int i = 0; i < counter; i++) {
-		printf("%d회 구매자, 티켓종류: %d, 나이: %d, 가격: %d, 우대사항: %d, 매수: %d\n",i+1 , ticketTimeCaseArr[i], ageCaseArr[i], ticketPriceArr[i], wooDaeArr[i], ticketSuArr[i]);
+	printf("\n\n======================================== 행복랜드 ========================================\n") ;
+	printf("%16s%12s%10s%16s%22s\n",bills1,bills2,bills3,bills4,bills5);
+	for (int i =0; i<counter; i++) {
+		switch (ticketTimeCaseArr[i]) {
+			case 1:
+				printf(" 종합이용권  1Day ");
+				break;
+			case 2:
+				printf(" 종합이용권 After4 ");
+				break;
+			case 3:
+				printf(" 파크이용권  1Day ");
+				break;
+			case 4:
+				printf(" 파크이용권 After4 ");
+				break;
+			default:
+				break;
+		}
+		
+		switch (ageCaseArr[i]) {
+			case 1:
+				printf(" 어 른 ");
+				break;
+			case 2:
+				printf(" 청소년 ");
+				break;
+			case 3:
+				printf(" 어린이 ");
+				break;
+			case 4:
+				printf(" 유 아 ");
+				break;
+			case 5:
+				printf(" 노 인 ");
+				break;
+			case 6:
+				printf(" 영 아 ");
+				break;
+			default:
+				break;
+		}
+		
+		printf("%d%10d원",ticketSuArr[i],ticketPriceArr[i]) ;
+		
+		switch (wooDaeArr[i]) {
+			case 1:
+				printf(" 우대사항 없음 \n");
+				break;
+			case 2:
+				printf(" 장애인 우대 \n");
+				break;
+			case 3:
+				printf(" 국가유공자 우대 \n");
+				break;
+			case 4:
+				printf(" 휴가장병 우대 \n");
+				break;
+			case 5:
+				printf(" 임산부 우대 \n");
+				break;
+			case 6:
+				printf(" 다둥이 행복카드 우대 \n");
+				break;
+			default:
+				break;
+		}
+		
+		
+		
 	}
 	printf("\n입장료 총액은 %d원 입니다.", totalTicketPrice);
-	printf("\n==================================================\n") ;
+	printf("\n===========================================================================================\n") ;
 	 
 	return 0; 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
