@@ -7,7 +7,7 @@ int main () {
 	int ticketCase, enterTime, ticketSu, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, totalTicketPrice,
 		todayDate, idFront, idFrontMonth, idFrontDay, idBack, idBackFirst, yyyymmdd, again, counter;
 		
-	int ticketTimeCaseArr[10], wooDaeArr[10], ageCaseArr[10], ticketPriceArr[10], ticketSuArr[10];
+	int ticketTimeCaseArr[10]={0}, wooDaeArr[10]={0}, ageCaseArr[10]={0}, ticketPriceArr[10]={0}, ticketSuArr[10]={0};
 		
 	const int DAY_ADULT = 56000, DAY_TEEN = 50000, DAY_KID = 46000, DAY_BABY = 15000,
 	    	  DAY_ADULT_ALL = 59000, DAY_TEEN_ALL = 52000, DAY_KID_ALL = 47000, DAY_BABY_ALL = 15000,
@@ -224,7 +224,7 @@ int main () {
 	
 	// 영수증 출력
 	printf("\n\n===================================== %s =====================================\n","행복랜드") ;
-	printf("%s\t\t%s\t     %s\t  %s\t\t%s\n","선택사항","연  령","매수","가격","우대사항");
+	printf("%s\t\t%s\t     %s\t  %s\t\t%s\n\n","선택사항","연  령","매수","가격","우대사항");
 	for (int i =0; i<counter; i++) {
 		switch (ticketTimeCaseArr[i]) {
 			case 1:
