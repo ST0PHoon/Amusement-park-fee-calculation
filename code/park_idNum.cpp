@@ -223,8 +223,8 @@ int main () {
 	printf("\n이용해주셔서 감사합니다.\n");
 	
 	// 영수증 출력
-	printf("\n\n======================================== %s ========================================\n","행복랜드") ;
-	printf("%s\t\t%s\t     %s\t  %s\t\t\t%s\n","선택사항","연  령","매수","가격","우대사항");
+	printf("\n\n===================================== %s =====================================\n","행복랜드") ;
+	printf("%s\t\t%s\t     %s\t  %s\t\t%s\n","선택사항","연  령","매수","가격","우대사항");
 	for (int i =0; i<counter; i++) {
 		switch (ticketTimeCaseArr[i]) {
 			case 1:
@@ -270,29 +270,29 @@ int main () {
 		
 		switch (wooDaeArr[i]) {
 			case 1:
-				printf("\t%s\n","우대사항 없음");
+				printf("%s\n","우대사항 없음");
 				break;
 			case 2:
-				printf("\t%s\n","장애인 우대");
+				printf("%s\n","장애인 우대");
 				break;
 			case 3:
-				printf("\t%s\n","국가유공자 우대");
+				printf("%s\n","국가유공자 우대");
 				break;
 			case 4:
-				printf("\t%s\n","휴가장병 우대");
+				printf("%s\n","휴가장병 우대");
 				break;
 			case 5:
-				printf("\t%s\n","임산부 우대");
+				printf("%s\n","임산부 우대");
 				break;
 			case 6:
-				printf("\t%s\n","다둥이 행복카드 우대");
+				printf("%s\n","다둥이 행복카드 우대");
 				break;
 			default:
 				break;
 		}
 	}
 	printf("\n입장료 총액은 %d원 입니다.", totalTicketPrice);
-	printf("\n===========================================================================================\n") ;
+	printf("\n=====================================================================================\n") ;
 	 
 	return 0; 
 }
