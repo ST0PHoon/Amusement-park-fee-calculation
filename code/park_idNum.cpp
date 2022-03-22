@@ -14,8 +14,7 @@ int main () {
 	    	  AFTER4_ADULT = 45000, AFTER4_TEEN = 40000, AFTER4_KID = 35000, AFTER4_BABY = 15000,
 	    	  AFTER4_ADULT_ALL = 48000, AFTER4_TEEN_ALL = 42000, AFTER4_KID_ALL = 36000, AFTER4_BABY_ALL = 15000,
 	    	  OLDMAN_AGE=65, TEEN_AGE_MAX=18, TEEN_KID_AGE=13, KID_BABY_AGE=3, BABY_AGE_MIN=1;
-	    	  
-	char bills1[10] = "구매사항", bills2[10] = "연령", bills3[10] = "매수", bills4[10] = "가격", bills5[10] = "우대사항";
+
 	//시간 불러오기 
 	time_t timer;
 	struct tm* t;
@@ -224,21 +223,21 @@ int main () {
 	printf("\n이용해주셔서 감사합니다.\n");
 	
 	// 영수증 출력
-	printf("\n\n======================================== 행복랜드 ========================================\n") ;
-	printf("%16s%12s%10s%16s%22s\n",bills1,bills2,bills3,bills4,bills5);
+	printf("\n\n======================================== %s ========================================\n","행복랜드") ;
+	printf("%16s%13s%12s%14s%24s\n","선택사항","연 령","매수","가격","우대사항");
 	for (int i =0; i<counter; i++) {
 		switch (ticketTimeCaseArr[i]) {
 			case 1:
-				printf(" 종합이용권  1Day ");
+				printf("%16s","종합이용권  1Day ");
 				break;
 			case 2:
-				printf(" 종합이용권 After4 ");
+				printf("%16s","종합이용권 After4");
 				break;
 			case 3:
-				printf(" 파크이용권  1Day ");
+				printf("%16s","파크이용권  1Day ");
 				break;
 			case 4:
-				printf(" 파크이용권 After4 ");
+				printf("%16s","파크이용권 After4");
 				break;
 			default:
 				break;
@@ -246,47 +245,47 @@ int main () {
 		
 		switch (ageCaseArr[i]) {
 			case 1:
-				printf(" 어 른 ");
+				printf("%12s","어 른");
 				break;
 			case 2:
-				printf(" 청소년 ");
+				printf("%12s","청소년");
 				break;
 			case 3:
-				printf(" 어린이 ");
+				printf("%12s","어린이");
 				break;
 			case 4:
-				printf(" 유 아 ");
+				printf("%12s","유 아");
 				break;
 			case 5:
-				printf(" 노 인 ");
+				printf("%12s","노 인");
 				break;
 			case 6:
-				printf(" 영 아 ");
+				printf("%12s","영 아");
 				break;
 			default:
 				break;
 		}
 		
-		printf("%d%10d원",ticketSuArr[i],ticketPriceArr[i]) ;
+		printf("%10d%16d원\t",ticketSuArr[i],ticketPriceArr[i]) ;
 		
 		switch (wooDaeArr[i]) {
 			case 1:
-				printf(" 우대사항 없음 \n");
+				printf("%-22s\n","우대사항 없음");
 				break;
 			case 2:
-				printf(" 장애인 우대 \n");
+				printf("%-22s\n","장애인 우대");
 				break;
 			case 3:
-				printf(" 국가유공자 우대 \n");
+				printf("%-22s\n","국가유공자 우대");
 				break;
 			case 4:
-				printf(" 휴가장병 우대 \n");
+				printf("%-22s\n","휴가장병 우대");
 				break;
 			case 5:
-				printf(" 임산부 우대 \n");
+				printf("%-22s\n","임산부 우대");
 				break;
 			case 6:
-				printf(" 다둥이 행복카드 우대 \n");
+				printf("%-22s\n","다둥이 행복카드 우대");
 				break;
 			default:
 				break;
