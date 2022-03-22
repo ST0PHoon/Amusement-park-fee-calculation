@@ -4,10 +4,10 @@
 
 int main () {
 	//변수 선언
-	int ticketCase, enterTime, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, again, totalTicketPrice,
-		todayDate, idFront, idFrontMonth, idFrontDay, idBack, idBackFirst, yyyymmdd, counter;
+	int ticketCase, enterTime, ticketSu, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, totalTicketPrice,
+		todayDate, idFront, idFrontMonth, idFrontDay, idBack, idBackFirst, yyyymmdd, again, counter;
 		
-	int ticketTimeCaseArr[10], wooDaeArr[10], ageCaseArr[10], ticketPriceArr[10];
+	int ticketTimeCaseArr[10], wooDaeArr[10], ageCaseArr[10], ticketPriceArr[10], ticketSuArr[10];
 		
 	const int DAY_ADULT = 56000, DAY_TEEN = 50000, DAY_KID = 46000, DAY_BABY = 15000,
 	    	  DAY_ADULT_ALL = 59000, DAY_TEEN_ALL = 52000, DAY_KID_ALL = 47000, DAY_BABY_ALL = 15000,
@@ -21,7 +21,7 @@ int main () {
 	t = localtime(&timer); // 포맷팅을 위해 구조체에 넣기
 
 	do { //변수 초기화 
-		ticketCase = 0, enterTime=0, wooDae=0, idFront=0, idBack=0;
+		ticketCase=0, enterTime=0, wooDae=0, ticketSu=0, idFront=0, idBack=0;
 		
 		// 이용권 종류 선택하기 (종합 or 파크)
 		do {
@@ -73,6 +73,16 @@ int main () {
 				printf("보기 중에서 선택해주세요.\n\n");
 			} 
 		} while(wooDae>6) ;
+
+		//구매권 매수
+		do {	
+			printf("\n동일한 티켓을 몇 장 구매하시겠습니까?.\n");
+			scanf("%d",&ticketSu);
+			
+			if ( ticketSu>10 ){
+				printf("최대 10장 구매할 수 있습니다.\n\n");
+			} 
+		} while(ticketSu>10) ;
 
 		//시간 입력 
 		todayDate= (t->tm_year + 1900)*10000 + (t->tm_mon + 1)*100 + t->tm_mday;  //20220101 형태로 변형 
@@ -183,6 +193,8 @@ int main () {
 		} else {
 			printf("\n우대 사항이 없습니다.\n");
 		}
+		//최종 가격
+		ticketPrice *= ticketSu;
 		
 		//입장료 총액 출력.
 		if (ticketPrice==0){
@@ -197,6 +209,7 @@ int main () {
 		wooDaeArr[counter] = wooDae;
 		ageCaseArr[counter] = ageCase;
 		ticketPriceArr[counter] = ticketPrice;
+		ticketSuArr[counter]=ticketSu;
 		totalTicketPrice += ticketPrice;
 		
 		//counter에 1추가, 초기값은 0 
@@ -212,9 +225,10 @@ int main () {
 	// 영수증 출력
 	printf("\n==================== 행복랜드 ====================\n") ;
 	for (int i = 0; i < counter; i++) {
-		printf("%d회 구매자, 티켓종류: %d, 나이: %d, 가격: %d, 우대사항: %d\n",i+1 , ticketTimeCaseArr[i], ageCaseArr[i], ticketPriceArr[i], wooDaeArr[i]);
+		printf("%d회 구매자, 티켓종류: %d, 나이: %d, 가격: %d, 우대사항: %d, 매수: %d\n",i+1 , ticketTimeCaseArr[i], ageCaseArr[i], ticketPriceArr[i], wooDaeArr[i], ticketSuArr[i]);
 	}
-	printf("입장료 총액은 %d원 입니다.\n", totalTicketPrice);
+	printf("\n입장료 총액은 %d원 입니다.", totalTicketPrice);
+	printf("\n==================================================\n") ;
 	 
 	return 0; 
 }
