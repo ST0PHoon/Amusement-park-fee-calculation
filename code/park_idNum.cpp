@@ -187,11 +187,11 @@ int main () {
 		} else if (wooDae == 3) {
 			ticketPrice = ticketPrice/2 ;
 		} else if (wooDae == 4 && ticketCase==1) { //종합이용권만 우대 
-			ticketPrice = ticketPrice * 0.51;
+			ticketPrice = (int)(ticketPrice*51);
 		} else if (wooDae == 5 && ticketCase==1 ) {
 			ticketPrice = ticketPrice/2;
 		} else if (wooDae == 6 && ticketCase==1) {
-			ticketPrice = ticketPrice*0.7;
+			ticketPrice = (int)(ticketPrice*0.7);
 		}
 		//최종 가격
 		ticketPrice *= ticketSu;
