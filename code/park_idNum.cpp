@@ -4,8 +4,10 @@
 
 int main () {
 	//변수 선언
-	int ticketCase, enterTime, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, again,
-		todayDate, idFront, idFrontMonth, idFrontDay, idBack, idBackFirst, yyyymmdd;
+	int ticketCase, enterTime, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, again, totalTicketPrice,
+		todayDate, idFront, idFrontMonth, idFrontDay, idBack, idBackFirst, yyyymmdd, counter;
+		
+	int ticketTimeCase[10], wooDaeArr[10], ageCaseArr[10], ticketPriceArr[10];
 		
 	const int DAY_ADULT = 56000, DAY_TEEN = 50000, DAY_KID = 46000, DAY_BABY = 15000,
 	    	  DAY_ADULT_ALL = 59000, DAY_TEEN_ALL = 52000, DAY_KID_ALL = 47000, DAY_BABY_ALL = 15000,
@@ -30,6 +32,7 @@ int main () {
 			if (ticketCase >2) {
 				printf("보기 중에서 선택해주세요.\n\n");
 			}
+			
 		} while(ticketCase >2) ;
 		
 		//주,야간권 선택 메세지 출력 & 입력받기 
@@ -91,6 +94,8 @@ int main () {
 			ageCase = 3; // 어린이 + 노인 
 		} else if (manAge >= TEEN_KID_AGE && manAge <= TEEN_AGE_MAX) {
 			ageCase = 2; //청소년 
+		} else if () {
+			ageCase = 5;
 		} else {
 			ageCase = 1; // 어른 
 		}
@@ -127,7 +132,17 @@ int main () {
 			} else {
 				ticketPrice=AFTER4_TEEN;
 			}
-		} else if ( ageCase == 3) { //어린이 + 노인 
+		} else if ( ageCase == 3) { //어린이
+			if (ticketTimeCase== 1) {
+				ticketPrice=DAY_KID_ALL;
+			} else if (ticketTimeCase==2) {
+				ticketPrice=AFTER4_KID_ALL;
+			}else if (ticketTimeCase ==3) {
+				ticketPrice=DAY_KID;
+			} else {
+				ticketPrice=AFTER4_KID;
+			}
+		} else if (ageCase == 5) { // 노인 (어린이랑 가격 동일) 
 			if (ticketTimeCase== 1) {
 				ticketPrice=DAY_KID_ALL;
 			} else if (ticketTimeCase==2) {
@@ -181,6 +196,9 @@ int main () {
 		printf("\n이어서 이용권을 구매하시겠습니까?\n1.예\n2.아니요\n");
 		scanf("%d",&again); 
 	} while(again == 1);
+	
+	//영수증 출력
+	 
 	
 	printf("\n이용해주셔서 감사합니다.");
 	return 0; 
