@@ -200,9 +200,25 @@ int main () {
 	//총 티켓 수
 	totalTicketSu = wooDae1+wooDae2+wooDae3+wooDae4+wooDae5+wooDae6;
 	
-	// 메시지 출력구간
+	//파일로 출력, 아래 fpirntf 로 값 저장
+	FILE *filePointer1, *filePointer2,*filePointer3;
+	filePointer1=fopen("ticketdata.csv","a");
+	filePointer2=fopen("woodaedata.csv","a");
+	filePointer3=fopen("daydata.csv","a");
 
-	//티켓 종류 별, 연령대 구매 분석 / 시간대 별 매출액 + 아래 긴 더하기 값은 변수로 담을 예정  
+	//임시, 이후 for 문을 이용하여 수정할 예정
+ 	fprintf(filePointer1,"%d,%d,%d,%d,%d\n%d,%d,%d,%d,%d\n%d,%d,%d,%d,%d\n%d,%d,%d,%d,%d\n%d,%d,%d,%d,%d\n%d,%d,%d,%d,%d\n%d,%d,%d,%d,%d\n",
+		1,ageTicketCase[0][0],ageTicketCase[1][0],ageTicketCase[2][0],ageTicketCase[3][0],
+		2,ageTicketCase[0][1],ageTicketCase[1][1],ageTicketCase[2][1],ageTicketCase[3][1],
+		3,ageTicketCase[0][2],ageTicketCase[1][2],ageTicketCase[2][2],ageTicketCase[3][2],
+		4,ageTicketCase[0][3],ageTicketCase[1][3],ageTicketCase[2][3],ageTicketCase[3][3],
+		5,ageTicketCase[0][4],ageTicketCase[1][4],ageTicketCase[2][4],ageTicketCase[3][4],
+		6,ageTicketCase[0][5],ageTicketCase[1][5],ageTicketCase[2][5],ageTicketCase[3][5],
+		7,parkAllMoney,parkMoney,oneDayMoney,After4Money);
+	fprintf(filePointer2,"%d,%d\n%d,%d\n%d,%d\n%d,%d\n%d,%d\n%d,%d\n%d,%d\n",0,totalTicketSu,1,wooDae1,2,wooDae2,3,wooDae3,4,wooDae4,5,wooDae5,6,wooDae6);
+
+
+	//티켓 종류 별, 연령대 구매 분석 / 시간대 별 매출액 
 	printf("\n======================= 권종 별 판매 현황 =======================\n");
 	printf("종합권 총 %d매\n",parkAllTicketSu);
 	printf("영아 %d매,유아 %d매, 어린이 %d매, 청소년 %d매, 어른 %d매, 노인 %d매\n",ageTicketCase[0][5],
@@ -250,19 +266,26 @@ int main () {
 			//마지막 날과 전날이 같은 경우 > 값을 더하고 출력
 			if (i==count-1) {
 				printf("%d년%2d월%2d일의 매출 총액:  %d원\n",year[k],month[k],day[k], dayTotal);
+				fprintf(filePointer3,"%d,%d,%d,%d\n",year[k],month[k],day[k], dayTotal);
 			} 
 		} else {
 			//마지막 날과 전날이 다른 경우 > 오늘의 티켓 가격을 출력 
 			if (i==count-1) {
 				printf("%d년%2d월%2d일의 매출 총액:  %d원\n",year[i],month[i],day[i], ticketPriceArr[i]);
+				fprintf(filePointer3,"%d,%d,%d,%d\n",year[k],month[k],day[k], dayTotal);
 			} else {
 				printf("%d년%2d월%2d일의 매출 총액:  %d원\n",year[k],month[k],day[k], dayTotal);
+				fprintf(filePointer3,"%d,%d,%d,%d\n",year[k],month[k],day[k], dayTotal);
 				dayTotal=0;
 				dayTotal +=ticketPriceArr[i];
 			}
 		} 
 	}
 	printf("==============================================\n");
+
+	fclose(filePointer1);
+	fclose(filePointer2);
+	fclose(filePointer3);
 	
 	return 0;
 }
