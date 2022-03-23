@@ -8,7 +8,7 @@ int main () {
 		ticketTimeCase, ticketPrice, totalTicketPrice,
 		todayDate, yyyymmdd, ageCase, 
 		idFront, idFrontMonth, idFrontDay, idBack, idBackFirst,
-		nextCustomer,again, counter;
+		nextCustomer, again, counter=0;
 		
 	const int DAY_ADULT = 56000, DAY_TEEN = 50000, DAY_KID = 46000, DAY_BABY = 15000,
 	    	  DAY_ADULT_ALL = 59000, DAY_TEEN_ALL = 52000, DAY_KID_ALL = 47000, DAY_BABY_ALL = 15000,
@@ -23,8 +23,8 @@ int main () {
 	t = localtime(&timer); // 포맷팅을 위해 구조체에 넣기
 
 	do { //다음 손님 받기
-		int ticketTimeCaseArr[20]={0}, wooDaeArr[20]={0}, ageCaseArr[20]={0}, ticketPriceArr[20]={0}, ticketSuArr[20]={0};		
-		do { 
+		int ticketTimeCaseArr[20]={0}, wooDaeArr[20]={0}, ageCaseArr[20]={0}, ticketPriceArr[20]={0}, ticketSuArr[20]={0};
+		do {
 			printf("================= 행복랜드 이용권 구매 =================\n") ;
 			// 이용권 종류 선택하기 (종합 or 파크)
 			do {
@@ -35,7 +35,6 @@ int main () {
 				if (ticketCase >2) {
 					printf("보기 중에서 선택해주세요.\n\n");
 				}
-				
 			} while(ticketCase >2) ;
 			
 			//주,야간권 선택 메세지 출력 & 입력받기 
@@ -78,7 +77,7 @@ int main () {
 			} while(wooDae>6) ;
 	
 			//구매권 매수
-			do {	
+			do {
 				printf("\n동일한 티켓을 몇 장 구매하시겠습니까?.\n");
 				scanf("%d",&ticketSu);
 				
@@ -165,7 +164,7 @@ int main () {
 				} else {
 					ticketPrice=AFTER4_KID;
 				}
-			} else {                  // 애기 
+			} else {                  // 유 아 
 				if (ticketTimeCase== 1) {
 					ticketPrice=DAY_BABY_ALL;
 				} else if (ticketTimeCase==2) {
@@ -212,10 +211,10 @@ int main () {
 			ageCaseArr[counter] = ageCase;
 			ticketPriceArr[counter] = ticketPrice;
 			ticketSuArr[counter]=ticketSu;
-			totalTicketPrice += ticketPrice;
+			totalTicketPrice += ticketPrice; 
 			
 			//counter에 1추가, 초기값은 0 
-			counter++; 
+			counter++;
 			
 			//이어서 예매할지 선택 
 			printf("\n이어서 이용권을 구매하시겠습니까?\n1.예\n2.아니요\n");
@@ -235,7 +234,9 @@ int main () {
 		printf("%s\t\t%s\t     %s\t  %s\t\t%s\n\n","선택사항","연  령","매수","가격","우대사항");
 		for (int i =0; i<counter; i++) {
 			//데이터 파일형식으로 저장 
-			fprintf(filePointer,"%d,%d,%d,%d,%d\n",ticketTimeCaseArr[i],wooDaeArr[i],ageCaseArr[i],ticketSuArr[i],ticketPriceArr[i]);
+			fprintf(filePointer,"%d,%d,%d,%d,%d,%d,%d,%d\n",
+								t->tm_year + 1900,t->tm_mon + 1, t->tm_mday,
+								ticketTimeCaseArr[i],wooDaeArr[i],ageCaseArr[i],ticketSuArr[i],ticketPriceArr[i]);
 			switch (ticketTimeCaseArr[i]) {
 				case 1:
 					printf("%s\t%s","종합이용권","1Day");
