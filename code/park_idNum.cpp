@@ -4,11 +4,11 @@
 
 int main () {
 	//변수 선언
-	int ticketCase, enterTime, ticketSu, wooDae, manAge, ticketPrice, ageCase, ticketTimeCase, totalTicketPrice,
-		todayDate, idFront, idFrontMonth, idFrontDay, idBack, idBackFirst, nextCustomer, yyyymmdd, again,counter, nextCustomercounter;
-		
-	int ticketTimeCaseArrTotal[20]={0}, wooDaeArrTotal[20]={0},
-		ageCaseArrTotal[20]={0}, ticketPriceArrTotal[20]={0}, ticketSuArrTotal[20]={0};
+	int ticketCase, enterTime, ticketSu, wooDae, manAge,
+		ticketTimeCase, ticketPrice, totalTicketPrice,
+		todayDate, yyyymmdd, ageCase, 
+		idFront, idFrontMonth, idFrontDay, idBack, idBackFirst,
+		nextCustomer,again, counter;
 		
 	const int DAY_ADULT = 56000, DAY_TEEN = 50000, DAY_KID = 46000, DAY_BABY = 15000,
 	    	  DAY_ADULT_ALL = 59000, DAY_TEEN_ALL = 52000, DAY_KID_ALL = 47000, DAY_BABY_ALL = 15000,
@@ -23,10 +23,8 @@ int main () {
 	t = localtime(&timer); // 포맷팅을 위해 구조체에 넣기
 
 	do { //다음 손님 받기
-		int ticketTimeCaseArr[20]={0}, wooDaeArr[20]={0}, ageCaseArr[20]={0}, ticketPriceArr[20]={0}, ticketSuArr[20]={0};
-		
-		do { //변수 초기화 
-			ticketCase=0, enterTime=0, wooDae=0, ticketSu=0, idFront=0, idBack=0;
+		int ticketTimeCaseArr[20]={0}, wooDaeArr[20]={0}, ageCaseArr[20]={0}, ticketPriceArr[20]={0}, ticketSuArr[20]={0};		
+		do { 
 			printf("================= 행복랜드 이용권 구매 =================\n") ;
 			// 이용권 종류 선택하기 (종합 or 파크)
 			do {
@@ -191,7 +189,7 @@ int main () {
 			} else if (wooDae == 3) {
 				ticketPrice = ticketPrice/2 ;
 			} else if (wooDae == 4 && ticketCase==1) { //종합이용권만 우대 
-				ticketPrice = (int)(ticketPrice*51);
+				ticketPrice = (int)(ticketPrice*0.51);
 			} else if (wooDae == 5 && ticketCase==1 ) {
 				ticketPrice = ticketPrice/2;
 			} else if (wooDae == 6 && ticketCase==1) {
@@ -216,19 +214,16 @@ int main () {
 			ticketSuArr[counter]=ticketSu;
 			totalTicketPrice += ticketPrice;
 			
-			//전체누적, 행렬에 담기
-			ticketTimeCaseArrTotal[counter] = ticketTimeCase;
-			wooDaeArrTotal[counter] = wooDae;
-			ageCaseArrTotal[counter] = ageCase;
-			ticketPriceArrTotal[counter] = ticketPrice;
-			ticketSuArrTotal[counter]=ticketSu;
-			
 			//counter에 1추가, 초기값은 0 
 			counter++; 
 			
 			//이어서 예매할지 선택 
 			printf("\n이어서 이용권을 구매하시겠습니까?\n1.예\n2.아니요\n");
 			scanf("%d",&again); 
+			
+			//변수 초기화
+			ticketCase=0, enterTime=0, wooDae=0, ticketSu=0, idFront=0, idBack=0, ageCase=0, ticketPrice=0;  
+
 		} while(again == 1);
 		
 		printf("\n이용해주셔서 감사합니다.\n");
@@ -306,7 +301,10 @@ int main () {
 		printf("\n=====================================================================================\n") ;
 
 		printf("\n새로운 주문을 받겠습니까?\n1.예\n2.종료\n");
-		scanf("%d",&nextCustomer); 
+		scanf("%d",&nextCustomer);
+		
+		counter = 0;
+		totalTicketPrice=0;
 	} while(nextCustomer == 1);
 	
 	return 0; 
