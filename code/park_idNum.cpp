@@ -227,11 +227,15 @@ int main () {
 		} while(again == 1);
 		
 		printf("\n이용해주셔서 감사합니다.\n");
+		//파일로 출력, 아래 fpirntf 로 값 저장  
+		FILE *filePointer = fopen("report.csv","a");
 		
 		// 영수증 출력
 		printf("\n\n===================================== %s =====================================\n","행복랜드") ;
 		printf("%s\t\t%s\t     %s\t  %s\t\t%s\n\n","선택사항","연  령","매수","가격","우대사항");
 		for (int i =0; i<counter; i++) {
+			//데이터 파일형식으로 저장 
+			fprintf(filePointer,"%d,%d,%d,%d,%d\n",ticketTimeCaseArr[i],wooDaeArr[i],ageCaseArr[i],ticketSuArr[i],ticketPriceArr[i]);
 			switch (ticketTimeCaseArr[i]) {
 				case 1:
 					printf("%s\t%s","종합이용권","1Day");
