@@ -304,10 +304,9 @@ int main () {
 		}
 		printf("\n입장료 총액은 %d원 입니다.", totalTicketPrice);
 		printf("\n=====================================================================================\n") ;
-
 		printf("\n새로운 주문을 받겠습니까?\n1.예\n2.종료\n");
 		scanf("%d",&nextCustomer);
-		
+		//변수 초기화 
 		counter = 0;
 		totalTicketPrice=0;
 	} while(nextCustomer == 1);
