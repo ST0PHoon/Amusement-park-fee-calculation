@@ -8,9 +8,9 @@ int main () {
 	
 	int year[MAX], month[MAX], day[MAX],
 		ticketTimeCaseArr[MAX],wooDaeArr[MAX],ageCaseArr[MAX],ticketSuArr[MAX],ticketPriceArr[MAX],
-		ageTicketCase[MAX][MAX]={0}, wooDeaArrOut[30]={0};
+		ageTicketCase[50][50]={0}, wooDeaArrOut[30]={0}, dayDataOut[30][6]={0};
 		
-	int k, dayTotal=0;
+	int k=0, dayTotal=0;
 		
 	while ( fscanf(fp, "%d,%d,%d,%d,%d,%d,%d,%d",&year[count], &month[count], &day[count],
 		&ticketTimeCaseArr[count], &wooDaeArr[count], &ageCaseArr[count], &ticketSuArr[count], &ticketPriceArr[count]) != -1) {
@@ -28,8 +28,11 @@ int main () {
 	}
 	printf("\n==========================================================\n");
 	
+	// 계산 구간 // 
+	//첫째날 데이터 첫행에 입력 
+	dayDataOut[0][0]=year[0], dayDataOut[0][1]=month[0], dayDataOut[0][2]=day[0], dayDataOut[0][3]=ticketPriceArr[0];
 	
-	for(int i = 0; i < count; i++) {
+	for(int i = 0, j = 1; i < count, j < count; i++, j++) {
 	//티켓 종류 별, 연령대 구매 분석 / 시간대 별 매출액
 		switch(ticketTimeCaseArr[i]) {
 			case 1: //종합 + 1Day 
@@ -171,7 +174,6 @@ int main () {
 			default:
 				break;
 		}
-
 	//총 티켓 판매 수, 혜택별 티켓수 분석
 		switch (wooDaeArr[i]) {
 			case 1:
@@ -195,13 +197,22 @@ int main () {
 			default:
 				break;
 		}
+	
+		//일자 별 총 매출 , 내림차순의 조건 없이도 가능하도록 수정할 예정 
+		if (dayDataOut[k][0]==year[j] && dayDataOut[k][1]==month[j] && dayDataOut[k][2]==day[j]){ //어제 오늘 날짜가 같은가? 
+			dayDataOut[k][3]+=ticketPriceArr[i];
+		} else {
+			k++; // 날짜가 다르다면 다음 행에 새로운 날짜,가격 입력 
+			dayDataOut[k][0]=year[j], dayDataOut[k][1]=month[j], dayDataOut[k][2]=day[j], dayDataOut[k][3]=ticketPriceArr[j];
+		}	
 	}
-
+	
 	//총 티켓 수
 	for (int i =1; i<=6; i++) {
 		wooDeaArrOut[0]+=wooDeaArrOut[i];
 	} 
-
+	
+	// 메세지 출력구간 //
 	//티켓 종류 별, 연령대 구매 분석 / 시간대 별 매출액 
 	printf("\n======================= 권종 별 판매 현황 =======================\n");
 	printf("종합권 총 %d매\n",ageTicketCase[0][0]);
@@ -236,50 +247,32 @@ int main () {
 	printf("다둥이 행복카드 우대 : %d매\n",wooDeaArrOut[6]);
 	printf("======================================================\n");
 	
+	//날짜 별, 매출액 분석	
+	printf("\n================ 날짜 별 수입 ================\n");
+	for (int i=0;i<=k;i++) {
+		printf("%d년 %02d월 %02d일 %d원\n",dayDataOut[i][0],dayDataOut[i][1],dayDataOut[i][2],dayDataOut[i][3]);		
+	}
+	printf("==============================================\n");
+	
+	//데이터 출력구간 
 	//파일로 출력, 아래 fpirntf 로 값 저장
 	FILE *filePointer1, *filePointer2,*filePointer3;
 	filePointer1=fopen("ticketdata.csv","w");
 	filePointer2=fopen("woodaedata.csv","w");
 	filePointer3=fopen("daydata.csv","w");
-		
-	//일자 별 총 매출 , 내림차순의 조건 없이도 가능하도록 수정할 예정 
-		// 날짜가 별로 내림차순 되어있다고 가정, k는 전날을 의미, k가 -1일 경우 0으로 취급	
-	printf("\n================ 날짜 별 수입 ================\n");
-	for(int i = 0; i < count; i++) {
-		k= i-1;
-		if (k == -1) {
-			k = 0;
-		}
-		
-		if (i==count-1) {
-			if (year[i]==year[k]&& month[i]==month[k]&& day[i]==day[k]) {
-				dayTotal += ticketPriceArr[i];
-				printf("%d년%2d월%2d일의 매출 총액:  %d원\n",year[i],month[i],day[i], dayTotal);
-				fprintf(filePointer3,"%d,%d,%d,%d\n",year[i],month[i],day[i], dayTotal);
-			} else {
-				printf("%d년%2d월%2d일의 매출 총액:  %d원\n",year[i],month[i],day[i], ticketPriceArr[i]);
-				fprintf(filePointer3,"%d,%d,%d,%d\n",year[i],month[i],day[i], ticketPriceArr[i]);
-			}
-		} else {
-			if (year[i]==year[k]&& month[i]==month[k]&& day[i]==day[k]) {
-				dayTotal += ticketPriceArr[i];
-			} else {
-				printf("%d년%2d월%2d일의 매출 총액:  %d원\n",year[k],month[k],day[k], dayTotal);
-				fprintf(filePointer3,"%d,%d,%d,%d\n",year[k],month[k],day[k], dayTotal);
-				dayTotal =ticketPriceArr[i];
-			}
-		}
-	} 
-	printf("==============================================\n");
 	
 	//티켓_나이 별 매수와 가격 
 	for ( int i = 0; i <=7;i++) {
-		fprintf(filePointer1,"%d,%d,%d,%d,%d\n", i,ageTicketCase[0][i],ageTicketCase[1][i],ageTicketCase[2][i],ageTicketCase[3][i]);
+		fprintf(filePointer1,"%d,%d,%d,%d,%d\n",i,ageTicketCase[0][i],ageTicketCase[1][i],ageTicketCase[2][i],ageTicketCase[3][i]);
 	}
 	//우대 데이터 출력 
 	for (int i = 0; i<=6;i++) {
 		fprintf(filePointer2,"%d,%d\n",i,wooDeaArrOut[i]);
 	}
+	//날짜 출력
+	for (int i=0;i<=k;i++){
+		fprintf(filePointer3,"%d,%d,%d,%d\n",dayDataOut[i][0],dayDataOut[i][1],dayDataOut[i][2],dayDataOut[i][3]);
+	} 
 
 	fclose(filePointer1);
 	fclose(filePointer2);
