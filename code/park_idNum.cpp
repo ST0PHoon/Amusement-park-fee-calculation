@@ -331,45 +331,42 @@ void printReportFn() {
 
 }
 
-void inputFn() {
-	selectTicketFn(); // 이용권 종류 선택하기 (종합 or 파크)
-			
-	selectDayNightFn(); //주,야간권 선택 메세지 출력 & 입력받기 
-						
-	idInputFn(); //주민번호 입력 받기 , 변수 계산 
-	
-	wooDaeInputFn(); //상시 우대사항 선택
-	
-	ticketSuFn(); //구매권 매수	
-}
+void oneGroupBills() {
+	do {
+		printf("================= 행복랜드 이용권 구매 =================\n") ;
+		//입력구간
+		selectTicketFn(); // 이용권 종류 선택하기 (종합 or 파크)
+				
+		selectDayNightFn(); //주,야간권 선택 메세지 출력 & 입력받기 
+							
+		idInputFn(); //주민번호 입력 받기 , 변수 계산 
+		
+		wooDaeInputFn(); //상시 우대사항 선택
+		
+		ticketSuFn(); //구매권 매수	
 
-void calclfFn () {
-	manAgeFn(); //만 나이 계산
+		//분류, 계산 
+		manAgeFn(); //만 나이 계산
+		
+		caseAgeTicketFn(); //나이, 티켓 케이스 나누기 
 	
-	caseAgeTicketFn(); //나이, 티켓 케이스 나누기 
-
-	ticketPrice1Fn(); //우대사항 이전, 요금 선정
-
-	ticketPriceEndFn(); //임장료에 우대사항 적용, 최종가격
+		ticketPrice1Fn(); //우대사항 이전, 요금 선정
 	
-	ticketPricePrintFn(); //입장료 총액 출력.
+		ticketPriceEndFn(); //임장료에 우대사항 적용, 최종가격
+		
+		ticketPricePrintFn(); //입장료 총액 출력.
+		
+		//결괏값 입력, 초기화 
+		doNextFn(); 
+	} while(again == 1);
+	
+	printf("\n이용해주셔서 감사합니다.\n");
 }
 
 int main () {
-	do { //다음 손님 받기
-		do {
-			printf("================= 행복랜드 이용권 구매 =================\n") ;
-			//입력구간
-			inputFn();
-
-			//분류, 계산 
-			calclfFn();
-			
-			//결괏값 입력, 초기화 
-			doNextFn(); 
-		} while(again == 1);
-		
-		printf("\n이용해주셔서 감사합니다.\n");
+	do { 
+		//첫 그룸 받기	
+		oneGroupBills();
 
 		//결과 엑셀파일로 출력 
 		printReportFn();
