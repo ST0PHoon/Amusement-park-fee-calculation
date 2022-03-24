@@ -7,7 +7,7 @@ int main () {
 	int ticketCase, enterTime, ticketSu, wooDae, manAge,
 		ticketTimeCase, ticketPrice, totalTicketPrice,
 		todayDate, yyyymmdd, ageCase, 
-		idFront, idFrontMonth, idFrontDay, idBack, idBackFirst,
+		idFront, idFrontYear, idFrontMonth, idFrontDay, idBack, idBackFirst,
 		nextCustomer, again, counter=0;
 		
 	const int DAY_ADULT = 56000, DAY_TEEN = 50000, DAY_KID = 46000, DAY_BABY = 15000,
@@ -54,15 +54,20 @@ int main () {
 				scanf("%6d %7d",&idFront, &idBack);
 				
 				idBackFirst = idBack/1000000;
+				idFrontYear = idFront/10000;
 				idFrontMonth = (idFront/100)%100;
 				idFrontDay = idFront%100;
 				//윤년이 아닌 경우의 2월 29일은 미분류 상 태 
 				if(idBackFirst >4 || idBackFirst<1 || idFrontDay>31 || idFrontDay<1 || idFrontMonth >12 ||
-						idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)) {
+						idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)||
+						((idFrontYear <= (t->tm_year)%100)&&(idBackFirst==1||idBackFirst==2))||
+						((idFrontYear > (t->tm_year)%100)&&(idBackFirst==3||idBackFirst==4))) {
 					printf("양식에 맞게 다시 입력해주세요.\n\n");
 				}
 			} while(idBackFirst >4 || idBackFirst<1 || idFrontDay>31 || idFrontDay<1 || idFrontMonth >12 ||
-						idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)) ;	
+						idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)||
+						((idFrontYear <= (t->tm_year)%100)&&(idBackFirst==1||idBackFirst==2))||
+						((idFrontYear > (t->tm_year)%100)&&(idBackFirst==3||idBackFirst==4))) ;	
 			
 			//상시 우대사항 선택
 			do {	
