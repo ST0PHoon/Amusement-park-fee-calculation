@@ -46,25 +46,25 @@ void idInputFn() {
 	timer = time(NULL); // 1970년 1월 1일 0시 0분 0초부터 시작하여 현재까지의 초
 	t = localtime(&timer); // 포맷팅을 위해 구조체에 넣기
 	
-			do {
-				printf("\n주민등록번호를 입력해주세요. ('-'대신 한칸 띄워주세요. ex) 051225 3152135)\n");
-				scanf("%6d %7d",&idFront, &idBack);
-				
-				idBackFirst = idBack/1000000;
-				idFrontYear = idFront/10000;
-				idFrontMonth = (idFront/100)%100;
-				idFrontDay = idFront%100;
-				//윤년이 아닌 경우의 2월 29일은 미분류 상 태 
-				if(idBackFirst >4 || idBackFirst<1 || idFrontDay>31 || idFrontDay<1 || idFrontMonth >12 ||
-						idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)||
-						((idFrontYear <= (t->tm_year)%100)&&(idBackFirst==1||idBackFirst==2))||
-						((idFrontYear > (t->tm_year)%100)&&(idBackFirst==3||idBackFirst==4))) {
-					printf("양식에 맞게 다시 입력해주세요.\n\n");
-				}
-			} while(idBackFirst >4 || idBackFirst<1 || idFrontDay>31 || idFrontDay<1 || idFrontMonth >12 ||
-						idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)||
-						((idFrontYear <= (t->tm_year)%100)&&(idBackFirst==1||idBackFirst==2))||
-						((idFrontYear > (t->tm_year)%100)&&(idBackFirst==3||idBackFirst==4))) ;	
+	do {
+		printf("\n주민등록번호를 입력해주세요. ('-'대신 한칸 띄워주세요. ex) 051225 3152135)\n");
+		scanf("%6d %7d",&idFront, &idBack);
+		
+		idBackFirst = idBack/1000000;
+		idFrontYear = idFront/10000;
+		idFrontMonth = (idFront/100)%100;
+		idFrontDay = idFront%100;
+		//윤년이 아닌 경우의 2월 29일은 미분류 상 태 
+		if(idBackFirst >4 || idBackFirst<1 || idFrontDay>31 || idFrontDay<1 || idFrontMonth >12 ||
+				idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)||
+				((idFrontYear <= (t->tm_year)%100)&&(idBackFirst==1||idBackFirst==2))||
+				((idFrontYear > (t->tm_year)%100)&&(idBackFirst==3||idBackFirst==4))) {
+			printf("양식에 맞게 다시 입력해주세요.\n\n");
+		}
+	} while(idBackFirst >4 || idBackFirst<1 || idFrontDay>31 || idFrontDay<1 || idFrontMonth >12 ||
+				idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)||
+				((idFrontYear <= (t->tm_year)%100)&&(idBackFirst==1||idBackFirst==2))||
+				((idFrontYear > (t->tm_year)%100)&&(idBackFirst==3||idBackFirst==4))) ;	
 } 
 
 void wooDaeInputFn() {
