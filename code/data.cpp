@@ -4,14 +4,13 @@ int main () {
 	//report 파일 값 불러오기 
 	FILE *fp = fopen("report.csv","r");
 	const int MAX = 100;
-	int count = 0, cir=0;
+	int count = 0;
+	
 	int year[MAX], month[MAX], day[MAX],
 		ticketTimeCaseArr[MAX],wooDaeArr[MAX],ageCaseArr[MAX],ticketSuArr[MAX],ticketPriceArr[MAX],
 		ageTicketCase[MAX][MAX]={0}, wooDeaArrOut[30]={0};
-	int wooDae1=0,wooDae2=0,wooDae3=0,wooDae4=0,wooDae5=0,wooDae6=0,
-		parkMoney=0, parkAllMoney=0, oneDayMoney=0, After4Money=0,
-		k, dayTotal=0, 
-		parkTicketSu,parkAllTicketSu,oneDayTicketSu, After4TicketSu;
+		
+	int k, dayTotal=0;
 		
 	while ( fscanf(fp, "%d,%d,%d,%d,%d,%d,%d,%d",&year[count], &month[count], &day[count],
 		&ticketTimeCaseArr[count], &wooDaeArr[count], &ageCaseArr[count], &ticketSuArr[count], &ticketPriceArr[count]) != -1) {
