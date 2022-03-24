@@ -173,51 +173,34 @@ int main () {
 		}
 
 	//총 티켓 판매 수, 혜택별 티켓수 분석
-		//마지막 인원수는 count 값
-		//혜택에 따라 티켓을 나눈다. 
-			switch (wooDaeArr[i]) {
-				case 1:
-					wooDeaArrOut[1] += ticketSuArr[i];
-					break;
-				case 2:
-					wooDeaArrOut[2] += ticketSuArr[i];
-					break;
-				case 3:
-					wooDeaArrOut[3] += ticketSuArr[i];
-					break;
-				case 4:
-					wooDeaArrOut[4] += ticketSuArr[i];
-					break;
-				case 5:
-					wooDeaArrOut[5] += ticketSuArr[i];
-					break;
-				case 6:
-					wooDeaArrOut[6] += ticketSuArr[i];
-					break;
-				default:
-					break;
-			}
+		switch (wooDaeArr[i]) {
+			case 1:
+				wooDeaArrOut[1] += ticketSuArr[i];
+				break;
+			case 2:
+				wooDeaArrOut[2] += ticketSuArr[i];
+				break;
+			case 3:
+				wooDeaArrOut[3] += ticketSuArr[i];
+				break;
+			case 4:
+				wooDeaArrOut[4] += ticketSuArr[i];
+				break;
+			case 5:
+				wooDeaArrOut[5] += ticketSuArr[i];
+				break;
+			case 6:
+				wooDeaArrOut[6] += ticketSuArr[i];
+				break;
+			default:
+				break;
+		}
 	}
 
 	//총 티켓 수
 	for (int i =1; i<=6; i++) {
 		wooDeaArrOut[0]+=wooDeaArrOut[i];
 	} 
-	
-	//파일로 출력, 아래 fpirntf 로 값 저장
-	FILE *filePointer1, *filePointer2,*filePointer3;
-	filePointer1=fopen("ticketdata.csv","w");
-	filePointer2=fopen("woodaedata.csv","w");
-	filePointer3=fopen("daydata.csv","w");
-
-	//임시, 이후 for 문을 이용하여 수정할 예정
-	for ( int i = 0; i <=7;i++) {
-		fprintf(filePointer1,"%d,%d,%d,%d,%d\n", i,ageTicketCase[0][i],ageTicketCase[1][i],ageTicketCase[2][i],ageTicketCase[3][i]);
-	}
-	//우대 데이터 출력 
-	for (int i = 0; i<=6;i++) {
-		fprintf(filePointer2,"%d,%d\n",i,wooDeaArrOut[i]);
-	}
 
 	//티켓 종류 별, 연령대 구매 분석 / 시간대 별 매출액 
 	printf("\n======================= 권종 별 판매 현황 =======================\n");
@@ -253,6 +236,12 @@ int main () {
 	printf("다둥이 행복카드 우대 : %d매\n",wooDeaArrOut[6]);
 	printf("======================================================\n");
 	
+	//파일로 출력, 아래 fpirntf 로 값 저장
+	FILE *filePointer1, *filePointer2,*filePointer3;
+	filePointer1=fopen("ticketdata.csv","w");
+	filePointer2=fopen("woodaedata.csv","w");
+	filePointer3=fopen("daydata.csv","w");
+		
 	//일자 별 총 매출 , 내림차순의 조건 없이도 가능하도록 수정할 예정 
 		// 날짜가 별로 내림차순 되어있다고 가정, k는 전날을 의미, k가 -1일 경우 0으로 취급	
 	printf("\n================ 날짜 별 수입 ================\n");
@@ -277,11 +266,20 @@ int main () {
 			} else {
 				printf("%d년%2d월%2d일의 매출 총액:  %d원\n",year[k],month[k],day[k], dayTotal);
 				fprintf(filePointer3,"%d,%d,%d,%d\n",year[k],month[k],day[k], dayTotal);
-				dayTotal +=ticketPriceArr[i];
+				dayTotal =ticketPriceArr[i];
 			}
 		}
-	}
+	} 
 	printf("==============================================\n");
+	
+	//티켓_나이 별 매수와 가격 
+	for ( int i = 0; i <=7;i++) {
+		fprintf(filePointer1,"%d,%d,%d,%d,%d\n", i,ageTicketCase[0][i],ageTicketCase[1][i],ageTicketCase[2][i],ageTicketCase[3][i]);
+	}
+	//우대 데이터 출력 
+	for (int i = 0; i<=6;i++) {
+		fprintf(filePointer2,"%d,%d\n",i,wooDeaArrOut[i]);
+	}
 
 	fclose(filePointer1);
 	fclose(filePointer2);
