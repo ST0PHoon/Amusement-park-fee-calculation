@@ -1,17 +1,18 @@
 #include <stdio.h>
 
 int main () {
-	//report 파일 값 불러오기 
-	FILE *fp = fopen("report.csv","r");
+	//변수 선언 
 	const int MAX = 100;
-	int count = 0;
+	
+	int count = 0, k=0, dayTotal=0;
 	
 	int year[MAX], month[MAX], day[MAX],
 		ticketTimeCaseArr[MAX],wooDaeArr[MAX],ageCaseArr[MAX],ticketSuArr[MAX],ticketPriceArr[MAX],
 		ageTicketCase[50][50]={0}, wooDeaArrOut[30]={0}, dayDataOut[30][6]={0};
-		
-	int k=0, dayTotal=0;
-		
+	
+	//report 파일 값 불러오기
+	FILE *fp = fopen("report.csv","r");
+
 	while ( fscanf(fp, "%d,%d,%d,%d,%d,%d,%d,%d",&year[count], &month[count], &day[count],
 		&ticketTimeCaseArr[count], &wooDaeArr[count], &ageCaseArr[count], &ticketSuArr[count], &ticketPriceArr[count]) != -1) {
 
