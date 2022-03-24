@@ -253,34 +253,33 @@ int main () {
 	printf("다둥이 행복카드 우대 : %d매\n",wooDeaArrOut[6]);
 	printf("======================================================\n");
 	
-	//일자 별 총 매출 
-		// 날짜가 별로 내림차순 되어있다고 가정, k는 전날을 의미, k가 -1일 경우 0으로 취급
+	//일자 별 총 매출 , 내림차순의 조건 없이도 가능하도록 수정할 예정 
+		// 날짜가 별로 내림차순 되어있다고 가정, k는 전날을 의미, k가 -1일 경우 0으로 취급	
 	printf("\n================ 날짜 별 수입 ================\n");
 	for(int i = 0; i < count; i++) {
 		k= i-1;
 		if (k == -1) {
 			k = 0;
 		}
-
-		if (year[i]==year[k]&& month[i]==month[k]&& day[i]==day[k]) {
-			dayTotal += ticketPriceArr[i];
-			//마지막 날과 전날이 같은 경우 > 값을 더하고 출력
-			if (i==count-1) {
-				printf("%d년%2d월%2d일의 매출 총액:  %d원\n",year[k],month[k],day[k], dayTotal);
-				fprintf(filePointer3,"%d,%d,%d,%d\n",year[k],month[k],day[k], dayTotal);
-			} 
-		} else {
-			//마지막 날과 전날이 다른 경우 > 오늘의 티켓 가격을 출력 
-			if (i==count-1) {
+		
+		if (i==count-1) {
+			if (year[i]==year[k]&& month[i]==month[k]&& day[i]==day[k]) {
+				dayTotal += ticketPriceArr[i];
+				printf("%d년%2d월%2d일의 매출 총액:  %d원\n",year[i],month[i],day[i], dayTotal);
+				fprintf(filePointer3,"%d,%d,%d,%d\n",year[i],month[i],day[i], dayTotal);
+			} else {
 				printf("%d년%2d월%2d일의 매출 총액:  %d원\n",year[i],month[i],day[i], ticketPriceArr[i]);
-				fprintf(filePointer3,"%d,%d,%d,%d\n",year[k],month[k],day[k], dayTotal);
+				fprintf(filePointer3,"%d,%d,%d,%d\n",year[i],month[i],day[i], ticketPriceArr[i]);
+			}
+		} else {
+			if (year[i]==year[k]&& month[i]==month[k]&& day[i]==day[k]) {
+				dayTotal += ticketPriceArr[i];
 			} else {
 				printf("%d년%2d월%2d일의 매출 총액:  %d원\n",year[k],month[k],day[k], dayTotal);
 				fprintf(filePointer3,"%d,%d,%d,%d\n",year[k],month[k],day[k], dayTotal);
-				dayTotal=0;
 				dayTotal +=ticketPriceArr[i];
 			}
-		} 
+		}
 	}
 	printf("==============================================\n");
 
