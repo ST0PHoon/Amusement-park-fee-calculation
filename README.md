@@ -6,4 +6,5 @@
 2. 선택한 우대사항을 최종가격에 적용합니다.
 3. 입력오류 시, 재입력을 요청합니다. (단, 주민등록번호 제외)
 
-![놀이동산캡쳐2](https://user-images.githubusercontent.com/95601950/159195226-f6ae943c-ac38-42e5-8a1d-8864623bdd64.png)
+![놀이동산캡쳐3](https://user-images.githubusercontent.com/95601950/159865905-b74be21d-5fab-4074-b696-c08d33e30e72.PNG)
+
