@@ -40,7 +40,32 @@ void selectDayNightFn() {
 	} while(enterTime >2) ;
 }
 
-// 나이 입력 칸 
+void idInputFn() {
+	time_t timer;
+	struct tm* t;
+	timer = time(NULL); // 1970년 1월 1일 0시 0분 0초부터 시작하여 현재까지의 초
+	t = localtime(&timer); // 포맷팅을 위해 구조체에 넣기
+	
+			do {
+				printf("\n주민등록번호를 입력해주세요. ('-'대신 한칸 띄워주세요. ex) 051225 3152135)\n");
+				scanf("%6d %7d",&idFront, &idBack);
+				
+				idBackFirst = idBack/1000000;
+				idFrontYear = idFront/10000;
+				idFrontMonth = (idFront/100)%100;
+				idFrontDay = idFront%100;
+				//윤년이 아닌 경우의 2월 29일은 미분류 상 태 
+				if(idBackFirst >4 || idBackFirst<1 || idFrontDay>31 || idFrontDay<1 || idFrontMonth >12 ||
+						idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)||
+						((idFrontYear <= (t->tm_year)%100)&&(idBackFirst==1||idBackFirst==2))||
+						((idFrontYear > (t->tm_year)%100)&&(idBackFirst==3||idBackFirst==4))) {
+					printf("양식에 맞게 다시 입력해주세요.\n\n");
+				}
+			} while(idBackFirst >4 || idBackFirst<1 || idFrontDay>31 || idFrontDay<1 || idFrontMonth >12 ||
+						idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)||
+						((idFrontYear <= (t->tm_year)%100)&&(idBackFirst==1||idBackFirst==2))||
+						((idFrontYear > (t->tm_year)%100)&&(idBackFirst==3||idBackFirst==4))) ;	
+} 
 
 void wooDaeInputFn() {
 	do {	
@@ -67,6 +92,12 @@ void ticketSuFn() {
 }
 
 void manAgeFn() {
+	time_t timer;
+	struct tm* t;
+	timer = time(NULL); // 1970년 1월 1일 0시 0분 0초부터 시작하여 현재까지의 초
+	t = localtime(&timer); // 포맷팅을 위해 구조체에 넣기
+	
+	todayDate= (t->tm_year + 1900)*10000 + (t->tm_mon + 1)*100 + t->tm_mday;  //20220101 형태로 변형 
 	if (idBackFirst ==3 || idBackFirst == 4) { //2000년대생 
 		yyyymmdd = idFront + 20000000;
 	} else {                  //1900년대생 
@@ -186,7 +217,7 @@ void ticketPricePrintFn() {
 	}
 }
 
-int doNextFn() {
+void doNextFn() {
 	//이번 구매 선택사항 별, 행렬에 담기
 	ticketTimeCaseArr[counter] = ticketTimeCase;
 	wooDaeArr[counter] = wooDae;
@@ -206,157 +237,136 @@ int doNextFn() {
 	ticketCase=0, enterTime=0, wooDae=0, ticketSu=0, idFront=0, idBack=0, ageCase=0, ticketPrice=0;  
 } 
 
+void billsOutNextFn(){
+	printf("\n\n===================================== %s =====================================\n","행복랜드") ;
+	printf("%s\t\t%s\t     %s\t  %s\t\t%s\n\n","선택사항","연  령","매수","가격","우대사항");
+	for (int i =0; i<counter; i++) {								
+		switch (ticketTimeCaseArr[i]) {
+			case 1:
+				printf("%s\t%s","종합이용권","1Day");
+				break;
+			case 2:
+				printf("%s\t%s","종합이용권","After4");
+				break;
+			case 3:
+				printf("%s\t%s","파크이용권","1Day");
+				break;
+			case 4:
+				printf("%s\t%s","파크이용권","After4");
+				break;
+			default:
+				break;
+		}
+		
+		switch (ageCaseArr[i]) {
+			case 1:
+				printf("\t%s","어  른");
+				break;
+			case 2:
+				printf("\t%s","청소년");
+				break;
+			case 3:
+				printf("\t%s","어린이");
+				break;
+			case 4:
+				printf("\t%s","유  아");
+				break;
+			case 5:
+				printf("\t%s","노  인");
+				break;
+			case 6:
+				printf("\t%s","영  아");
+				break;
+			default:
+				break;
+		}
+		
+		printf("%10d%14d원\t",ticketSuArr[i],ticketPriceArr[i]) ;
+		
+		switch (wooDaeArr[i]) {
+			case 1:
+				printf("%s\n","우대사항 없음");
+				break;
+			case 2:
+				printf("%s\n","장애인 우대");
+				break;
+			case 3:
+				printf("%s\n","국가유공자 우대");
+				break;
+			case 4:
+				printf("%s\n","휴가장병 우대");
+				break;
+			case 5:
+				printf("%s\n","임산부 우대");
+				break;
+			case 6:
+				printf("%s\n","다둥이 행복카드 우대");
+				break;
+			default:
+				break;
+		}
+	}
+	printf("\n입장료 총액은 %d원 입니다.", totalTicketPrice);
+	printf("\n=====================================================================================\n") ;
+	printf("\n새로운 주문을 받겠습니까?\n1.예\n2.종료\n");
+	scanf("%d",&nextCustomer);
+	//변수 초기화 
+	counter = 0;
+	totalTicketPrice=0;
+}
 
-int main () {
-	//시간 불러오기 
+void printReportFn() {
 	time_t timer;
 	struct tm* t;
 	timer = time(NULL); // 1970년 1월 1일 0시 0분 0초부터 시작하여 현재까지의 초
 	t = localtime(&timer); // 포맷팅을 위해 구조체에 넣기
 
+	FILE *filePointer = fopen("report.csv","a");
+	
+	for (int i =0; i<counter; i++) {
+		fprintf(filePointer,"%d,%d,%d,%d,%d,%d,%d,%d\n",
+				t->tm_year + 1900,t->tm_mon + 1, t->tm_mday,
+				ticketTimeCaseArr[i],wooDaeArr[i],ageCaseArr[i],ticketSuArr[i],ticketPriceArr[i]);
+	}
+
+}
+
+int main () {
 	do { //다음 손님 받기
 		do {
 			printf("================= 행복랜드 이용권 구매 =================\n") ;
-			// 이용권 종류 선택하기 (종합 or 파크)
-			selectTicketFn();
+			//입력구간
+			selectTicketFn(); // 이용권 종류 선택하기 (종합 or 파크)
 			
-			//주,야간권 선택 메세지 출력 & 입력받기 
-			selectDayNightFn();
+			selectDayNightFn(); //주,야간권 선택 메세지 출력 & 입력받기 
 						
-			//주민번호 입력 받기 , 변수 계산 
-			do {
-				printf("\n주민등록번호를 입력해주세요. ('-'대신 한칸 띄워주세요. ex) 051225 3152135)\n");
-				scanf("%6d %7d",&idFront, &idBack);
-				
-				idBackFirst = idBack/1000000;
-				idFrontYear = idFront/10000;
-				idFrontMonth = (idFront/100)%100;
-				idFrontDay = idFront%100;
-				//윤년이 아닌 경우의 2월 29일은 미분류 상 태 
-				if(idBackFirst >4 || idBackFirst<1 || idFrontDay>31 || idFrontDay<1 || idFrontMonth >12 ||
-						idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)||
-						((idFrontYear <= (t->tm_year)%100)&&(idBackFirst==1||idBackFirst==2))||
-						((idFrontYear > (t->tm_year)%100)&&(idBackFirst==3||idBackFirst==4))) {
-					printf("양식에 맞게 다시 입력해주세요.\n\n");
-				}
-			} while(idBackFirst >4 || idBackFirst<1 || idFrontDay>31 || idFrontDay<1 || idFrontMonth >12 ||
-						idFrontDay <1 || idBack > 9999999 || idFront>999999 ||(idFrontMonth = 2 && idFrontDay>29)||
-						((idFrontYear <= (t->tm_year)%100)&&(idBackFirst==1||idBackFirst==2))||
-						((idFrontYear > (t->tm_year)%100)&&(idBackFirst==3||idBackFirst==4))) ;	
+			idInputFn(); //주민번호 입력 받기 , 변수 계산 
 			
-			//상시 우대사항 선택
-			wooDaeInputFn();
-	
-			//구매권 매수
-			ticketSuFn();
-	
-			//시간 입력 
-			todayDate= (t->tm_year + 1900)*10000 + (t->tm_mon + 1)*100 + t->tm_mday;  //20220101 형태로 변형 
+			wooDaeInputFn(); //상시 우대사항 선택
+	 
+			ticketSuFn(); //구매권 매수		
 			
-			//만 나이 계산
-			manAgeFn();
+			//분류, 계산 
+			manAgeFn(); //만 나이 계산
 			
-			//나이, 티켓 케이스 나누기 
-			caseAgeTicketFn();
-			
-			//우대사항 이전, 요금 선정
-			ticketPrice1Fn();
+			caseAgeTicketFn(); //나이, 티켓 케이스 나누기 
+
+			ticketPrice1Fn(); //우대사항 이전, 요금 선정
 		
-			//임장료에 우대사항 적용, 최종가격
-			ticketPriceEndFn();
+			ticketPriceEndFn(); //임장료에 우대사항 적용, 최종가격
 			
-			//입장료 총액 출력.
-			ticketPricePrintFn();
-			
-			//결괏값 입력, 초기화 
-			doNextFn();
+			ticketPricePrintFn(); //입장료 총액 출력.
+			 
+			doNextFn(); //결괏값 입력, 초기화 
 		} while(again == 1);
 		
 		printf("\n이용해주셔서 감사합니다.\n");
-		//파일로 출력, 아래 fpirntf 로 값 저장  
-		FILE *filePointer = fopen("report.csv","a");
+
+		//결과 엑셀파일로 출력 
+		printReportFn();
 		
 		// 영수증 출력
-		printf("\n\n===================================== %s =====================================\n","행복랜드") ;
-		printf("%s\t\t%s\t     %s\t  %s\t\t%s\n\n","선택사항","연  령","매수","가격","우대사항");
-		for (int i =0; i<counter; i++) {
-			//데이터 파일형식으로 저장 
-			fprintf(filePointer,"%d,%d,%d,%d,%d,%d,%d,%d\n",
-								t->tm_year + 1900,t->tm_mon + 1, t->tm_mday,
-								ticketTimeCaseArr[i],wooDaeArr[i],ageCaseArr[i],ticketSuArr[i],ticketPriceArr[i]);
-								
-			switch (ticketTimeCaseArr[i]) {
-				case 1:
-					printf("%s\t%s","종합이용권","1Day");
-					break;
-				case 2:
-					printf("%s\t%s","종합이용권","After4");
-					break;
-				case 3:
-					printf("%s\t%s","파크이용권","1Day");
-					break;
-				case 4:
-					printf("%s\t%s","파크이용권","After4");
-					break;
-				default:
-					break;
-			}
-			
-			switch (ageCaseArr[i]) {
-				case 1:
-					printf("\t%s","어  른");
-					break;
-				case 2:
-					printf("\t%s","청소년");
-					break;
-				case 3:
-					printf("\t%s","어린이");
-					break;
-				case 4:
-					printf("\t%s","유  아");
-					break;
-				case 5:
-					printf("\t%s","노  인");
-					break;
-				case 6:
-					printf("\t%s","영  아");
-					break;
-				default:
-					break;
-			}
-			
-			printf("%10d%14d원\t",ticketSuArr[i],ticketPriceArr[i]) ;
-			
-			switch (wooDaeArr[i]) {
-				case 1:
-					printf("%s\n","우대사항 없음");
-					break;
-				case 2:
-					printf("%s\n","장애인 우대");
-					break;
-				case 3:
-					printf("%s\n","국가유공자 우대");
-					break;
-				case 4:
-					printf("%s\n","휴가장병 우대");
-					break;
-				case 5:
-					printf("%s\n","임산부 우대");
-					break;
-				case 6:
-					printf("%s\n","다둥이 행복카드 우대");
-					break;
-				default:
-					break;
-			}
-		}
-		printf("\n입장료 총액은 %d원 입니다.", totalTicketPrice);
-		printf("\n=====================================================================================\n") ;
-		printf("\n새로운 주문을 받겠습니까?\n1.예\n2.종료\n");
-		scanf("%d",&nextCustomer);
-		//변수 초기화 
-		counter = 0;
-		totalTicketPrice=0;
+		billsOutNextFn();
 	} while(nextCustomer == 1);
 	
 	return 0; 
